@@ -132,6 +132,32 @@ namespace PotentiallyDangerousPrecipitation
 
                 Logger.Debug("Placed new Shrine of the Mountain (50x)");
             }
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                var sceneDirector = Resources.FindObjectsOfTypeAll<SceneDirector>().FirstOrDefault();
+                var directorCore = Resources.FindObjectsOfTypeAll<DirectorCore>().FirstOrDefault();
+
+                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                {
+                    placementMode = DirectorPlacementRule.PlacementMode.Random
+                };
+
+                for (var i = 0; i < 50; i++) directorCore.TrySpawnObject(new DirectorSpawnRequest(sceneDirector.teleporterSpawnCard, placementRule, sceneDirector.GetField<Xoroshiro128Plus>("rng")));
+
+                Logger.Debug("Placed new Teleporter (50x)");
+            }
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                Logger.Info("Activating all teleporters");
+
+                //Find interactor of current player
+                var bodies = Resources.FindObjectsOfTypeAll<CharacterBody>().Where(x => x.isPlayerControlled);
+                var body = bodies.FirstOrDefault(x => Util.LookUpBodyNetworkUser(x).hasAuthority);
+                var interactor = body.GetComponent<Interactor>();
+
+                var teleporterInteractions = Resources.FindObjectsOfTypeAll<TeleporterInteraction>();
+                foreach (var interaction in teleporterInteractions) interaction.OnInteractionBegin(interactor);
+            }
             if (Input.GetKeyDown(KeyCode.K))
             {
                 Logger.Info("Giving all players lunar coins");
@@ -163,11 +189,16 @@ namespace PotentiallyDangerousPrecipitation
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
-                SimpleDialogBox simpleDialogBox = SimpleDialogBox.Create(null);
-                simpleDialogBox.AddCancelButton(CommonLanguageTokens.ok, Array.Empty<object>());
-                simpleDialogBox.AddCommandButton("command!", CommonLanguageTokens.ok, Array.Empty<object>());
+                /*SimpleDialogBox simpleDialogBox = SimpleDialogBox.Create(null);
+                simpleDialogBox.AddCancelButton(CommonLanguageTokens.cancel, Array.Empty<object>());
+                simpleDialogBox.AddActionButton(() =>
+                {
+                    //new Form1().Show();
+                }, CommonLanguageTokens.ok, Array.Empty<object>());
                 simpleDialogBox.headerLabel.text = "BAHAHA YOU PRESSED F";
-                simpleDialogBox.descriptionLabel.text = "BAHAHA YOU PRESSED F, AND THIS IS A DESCRIPTION";
+                simpleDialogBox.descriptionLabel.text = "BAHAHA YOU PRESSED F, AND THIS IS A DESCRIPTION";*/
+
+                Chat.AddMessage("</noparse><color=#e5eefc>HELLOAAAA</color><noparse>");
             }
         }
     }

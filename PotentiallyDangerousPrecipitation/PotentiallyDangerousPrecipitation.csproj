@@ -85,6 +85,9 @@
     <None Include="App.config" />
     <Compile Include="ReflectionUtil.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "M:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\Plugins\$(ProjectName).dll"</PostBuildEvent>
