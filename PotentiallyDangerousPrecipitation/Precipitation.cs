@@ -1,8 +1,6 @@
 ﻿using IllusionPlugin;
 using PotentiallyDangerousPrecipitation.HarmonyPatches;
 using RoR2;
-using RoR2.UI;
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -19,6 +17,7 @@ namespace PotentiallyDangerousPrecipitation
         public static bool PerfectLegendaryChance { get; set; }
         public static bool HighStacks { get; set; }
         public static bool InfiniteRecycling { get; set; }
+        public static bool OnlyForgiveMePlease { get; set; }
 
         public void OnApplicationQuit()
         {
@@ -95,6 +94,11 @@ namespace PotentiallyDangerousPrecipitation
                 InfiniteRecycling = !InfiniteRecycling;
                 Logger.Debug($"InfiniteRecycling: {InfiniteRecycling}");
             }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                OnlyForgiveMePlease = !OnlyForgiveMePlease;
+                Logger.Debug($"OnlyForgiveMePlease: {OnlyForgiveMePlease}");
+            }
             if (Input.GetKeyDown(KeyCode.Numlock))
             {
                 HighStacks = !HighStacks;
@@ -111,8 +115,9 @@ namespace PotentiallyDangerousPrecipitation
                 };
                 var categories = ClassicStageInfo.instance.interactableCategories;
                 var card = categories.categories.SelectMany(x => x.cards).First(x => x.spawnCard.name == "iscShrineBoss");
+                var rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
 
-                directorCore.TrySpawnObject(new DirectorSpawnRequest(card.spawnCard, placementRule, sceneDirector.GetField<Xoroshiro128Plus>("rng")));
+                directorCore.TrySpawnObject(new DirectorSpawnRequest(card.spawnCard, placementRule, rng));
 
                 Logger.Debug("Placed new Shrine of the Mountain");
             }
@@ -127,8 +132,9 @@ namespace PotentiallyDangerousPrecipitation
                 };
                 var categories = ClassicStageInfo.instance.interactableCategories;
                 var card = categories.categories.SelectMany(x => x.cards).First(x => x.spawnCard.name == "iscShrineBoss");
+                var rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
 
-                for (var i = 0; i < 50; i++) directorCore.TrySpawnObject(new DirectorSpawnRequest(card.spawnCard, placementRule, sceneDirector.GetField<Xoroshiro128Plus>("rng")));
+                for (var i = 0; i < 50; i++) directorCore.TrySpawnObject(new DirectorSpawnRequest(card.spawnCard, placementRule, rng));
 
                 Logger.Debug("Placed new Shrine of the Mountain (50x)");
             }
@@ -142,7 +148,24 @@ namespace PotentiallyDangerousPrecipitation
                     placementMode = DirectorPlacementRule.PlacementMode.Random
                 };
 
-                for (var i = 0; i < 50; i++) directorCore.TrySpawnObject(new DirectorSpawnRequest(sceneDirector.teleporterSpawnCard, placementRule, sceneDirector.GetField<Xoroshiro128Plus>("rng")));
+                var rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
+
+                directorCore.TrySpawnObject(new DirectorSpawnRequest(sceneDirector.teleporterSpawnCard, placementRule, rng));
+
+                Logger.Debug("Placed new Teleporter");
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                var sceneDirector = Resources.FindObjectsOfTypeAll<SceneDirector>().FirstOrDefault();
+                var directorCore = Resources.FindObjectsOfTypeAll<DirectorCore>().FirstOrDefault();
+
+                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                {
+                    placementMode = DirectorPlacementRule.PlacementMode.Random
+                };
+                var rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
+
+                for (var i = 0; i < 50; i++) directorCore.TrySpawnObject(new DirectorSpawnRequest(sceneDirector.teleporterSpawnCard, placementRule, rng));
 
                 Logger.Debug("Placed new Teleporter (50x)");
             }
@@ -153,10 +176,18 @@ namespace PotentiallyDangerousPrecipitation
                 //Find interactor of current player
                 var bodies = Resources.FindObjectsOfTypeAll<CharacterBody>().Where(x => x.isPlayerControlled);
                 var body = bodies.FirstOrDefault(x => Util.LookUpBodyNetworkUser(x).hasAuthority);
-                var interactor = body.GetComponent<Interactor>();
 
-                var teleporterInteractions = Resources.FindObjectsOfTypeAll<TeleporterInteraction>();
-                foreach (var interaction in teleporterInteractions) interaction.OnInteractionBegin(interactor);
+                if (body == null && bodies.Any())
+                {
+                    body = bodies.ElementAt(0);
+                }
+
+                if (body != null)
+                {
+                    var interactor = body.GetComponent<Interactor>();
+                    var teleporterInteractions = Resources.FindObjectsOfTypeAll<TeleporterInteraction>();
+                    foreach (var interaction in teleporterInteractions) interaction.OnInteractionBegin(interactor);
+                }
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
@@ -185,6 +216,17 @@ namespace PotentiallyDangerousPrecipitation
                 foreach (var controller in voteControllers)
                 {
                     controller.InvokeMethod("InitializeVoters");
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                var voteControllers = Resources.FindObjectsOfTypeAll<VoteController>();
+                foreach (var controller in voteControllers)
+                {
+                    if (controller.timerIsActive)
+                    {
+                        controller.InvokeMethod("FinishVote");
+                    }
                 }
             }
             if (Input.GetKeyDown(KeyCode.F))

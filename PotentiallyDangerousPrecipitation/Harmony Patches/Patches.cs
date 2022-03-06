@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Unity;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -39,27 +40,86 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         }
     }
 
+    [HarmonyPatch(typeof(ItemDef))]
+    public class ItemDefPatch
+    {
+        [HarmonyPatch("AttemptGrant")]
+        static bool Prefix(ref PickupDef.GrantContext context)
+        {
+            Inventory inventory = context.body.inventory;
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(context.controller.pickupIndex);
+            inventory.GiveItem((pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None, Precipitation.HighStacks ? 10 : 1);
+            context.shouldDestroy = true;
+            context.shouldNotify = true;
+            return false;
+        }
+    }
+
     [HarmonyPatch(typeof(GenericPickupController))]
     public class GenericPickupControllerPatch
     {
-        [HarmonyPatch("GrantItem")]
-        [HarmonyPatch(new[] { typeof(CharacterBody), typeof(Inventory) })]
-        static bool Prefix(GenericPickupController __instance, CharacterBody body, Inventory inventory)
+        private class PickupMessage : MessageBase
+        {
+            public void Reset()
+            {
+                masterGameObject = null;
+                pickupIndex = PickupIndex.none;
+                pickupQuantity = 0u;
+            }
+
+            public PickupMessage()
+            {
+            }
+
+            public override void Serialize(NetworkWriter writer)
+            {
+                writer.Write(masterGameObject);
+                GeneratedNetworkCode._WritePickupIndex_None(writer, pickupIndex);
+                writer.WritePackedUInt32(pickupQuantity);
+            }
+
+            public override void Deserialize(NetworkReader reader)
+            {
+                masterGameObject = reader.ReadGameObject();
+                pickupIndex = GeneratedNetworkCode._ReadPickupIndex_None(reader);
+                pickupQuantity = reader.ReadPackedUInt32();
+            }
+
+            public GameObject masterGameObject;
+
+            public PickupIndex pickupIndex;
+
+            public uint pickupQuantity;
+        }
+
+        [HarmonyPatch("SendPickupMessage")]
+        [HarmonyPatch(new[] { typeof(CharacterMaster), typeof(PickupIndex) })]
+        static bool Prefix(CharacterMaster master, PickupIndex pickupIndex)
         {
             if (!NetworkServer.active)
             {
-                Debug.LogWarning("[Server] function 'System.Void RoR2.GenericPickupController::GrantItem(RoR2.CharacterBody,RoR2.Inventory)' called on client");
+                Debug.LogWarning("[Server] function 'System.Void RoR2.GenericPickupController::SendPickupMessage(RoR2.CharacterMaster,RoR2.PickupIndex)' called on client");
                 return false;
             }
 
-            PickupDef pickupDef = PickupCatalog.GetPickupDef(__instance.pickupIndex);
+            uint pickupQuantity = Precipitation.HighStacks ? 10u : 1u;
+            if (master.inventory && !Precipitation.HighStacks)
+            {
+                PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
+                ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
+                if (itemIndex != ItemIndex.None)
+                {
+                    pickupQuantity = (uint)master.inventory.GetItemCount(itemIndex);
+                }
+            }
 
-            var count = Precipitation.HighStacks ? 10 : 1;
-            inventory.GiveItem((pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None, count);
-
-            typeof(GenericPickupController).InvokeMethod("SendPickupMessage", inventory.GetComponent<CharacterMaster>(), __instance.pickupIndex);
-
-            UnityEngine.Object.Destroy(__instance.gameObject);
+            var msg = new PickupMessage
+            {
+                masterGameObject = master.gameObject,
+                pickupIndex = pickupIndex,
+                pickupQuantity = pickupQuantity
+            };
+            NetworkServer.SendByChannelToAll(57, msg, RoR2.Networking.QosChannelIndex.chat.intVal);
 
             return false;
         }
@@ -94,7 +154,7 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
                 __result = 100;
                 return false;
             }
-            else return true;
+            return true;
         }
     }
 
@@ -104,7 +164,7 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         static MethodBase TargetMethod()
         {
             //Patch the thing that steals logs from me
-            var assembly = AppDomain.CurrentDomain.GetAssemblies().First(x => x.FullName.Contains("Assembly-CSharp"));
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().First(x => x.FullName.Contains("RoR2"));
             var redirectorType = assembly.GetType("RoR2.UnitySystemConsoleRedirector");
             return redirectorType.GetMethod("Redirect", ReflectionUtil._allBindingFlags);
         }
@@ -115,14 +175,13 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         }
     }
 
-    [HarmonyPatch(typeof(BasicPickupDropTable))]
-    public class BasicPickupDropTablePatch
+    [HarmonyPatch(typeof(PickupDropTable))]
+    public class PickupDropTablePatch
     {
         [HarmonyPatch("GenerateDrop")]
         [HarmonyPatch(new[] { typeof(Xoroshiro128Plus) })]
         static bool Prefix(Xoroshiro128Plus rng, ref PickupIndex __result)
         {
-            var original = typeof(SacrificeArtifactManager).GetField<PickupDropTable>("dropTable");
             if (Precipitation.PerfectFuelCellChance)
             {
                 __result = rng.NextElementUniform(new List<PickupIndex>() {
@@ -149,8 +208,17 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
             }
             else if (Precipitation.PerfectLegendaryChance)
             {
-                var selector = original.GetField<WeightedSelection<List<PickupIndex>>>("selector");
-                __result = rng.NextElementUniform(selector.choices[2].value);
+                __result = rng.NextElementUniform(Run.instance.availableTier3DropList);
+                return false;
+            }
+            else if (Precipitation.OnlyForgiveMePlease)
+            {
+                __result = rng.NextElementUniform(new List<PickupIndex>() {
+                    PickupCatalog.FindPickupIndex("EquipmentIndex.SoulCorruptor"),
+                    PickupCatalog.FindPickupIndex("EquipmentIndex.QuestVolatileBattery"),
+                    PickupCatalog.FindPickupIndex("EquipmentIndex.CrippleWard"),
+                    PickupCatalog.FindPickupIndex("EquipmentIndex.DeathProjectile")
+                });
                 return false;
             }
             return true;
