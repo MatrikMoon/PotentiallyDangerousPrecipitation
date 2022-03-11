@@ -1,0 +1,48 @@
+.bar {
+    display: flex;
+    flex-direction: column;
+    width: 10em;
+
+    --background-color: #444b58;
+    --shadow-color: #00000099;
+
+    > input {
+        //Border and shaping
+        border-radius: 0.7em;
+        border-width: 0;
+        outline: none;
+        box-shadow: 1px 2px 4px var(--shadow-color);
+        padding: 10px;
+
+        &.list-open {
+            border-radius: 0.7em 0.7em 0 0;
+        }
+
+        //Colors
+        color: #eee;
+        background: var(--background-color);
+    }
+
+    > ul {
+        list-style: none;
+        overflow: hidden;
+        padding: 0;
+        background: #444b58;
+        border-radius: 0 0 0.7em 0.7em;
+        margin-top: 0;
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
+
+        > li {
+            padding: 0.5ex;
+            text-align: center;
+            font-size: 16px;
+
+            &:focus,
+            &:hover,
+            &.active {
+                outline: none;
+                background: rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+}

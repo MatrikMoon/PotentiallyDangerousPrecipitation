@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30028.174
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32127.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PotentiallyDangerousPrecipitation", "PotentiallyDangerousPrecipitation\PotentiallyDangerousPrecipitation.csproj", "{A0C11672-C804-4A94-9EF9-0954B21C4500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protos", "Protos\Protos.csproj", "{F6C447A1-D991-480B-BF7C-C29CD18A6655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A0C11672-C804-4A94-9EF9-0954B21C4500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C11672-C804-4A94-9EF9-0954B21C4500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C11672-C804-4A94-9EF9-0954B21C4500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C447A1-D991-480B-BF7C-C29CD18A6655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C447A1-D991-480B-BF7C-C29CD18A6655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C447A1-D991-480B-BF7C-C29CD18A6655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C447A1-D991-480B-BF7C-C29CD18A6655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

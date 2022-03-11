@@ -1,0 +1,33 @@
+syntax = "proto3";
+package proto.packet;
+
+option csharp_namespace = "Protos.Models.Packets";
+
+import "models.proto";
+
+message Command {
+  enum CommandTypes {
+    ReturnToMenu = 0;
+  }
+
+  CommandTypes command_type = 1;
+}
+
+message Connect {
+  string password = 1;
+}
+
+message Response {
+  enum ResponseType {
+    Fail = 0;
+    Success = 1;
+  }
+
+  ResponseType type = 1;
+  string message = 2;
+}
+
+message ConnectResponse {
+  Response response = 1;
+  model.User self = 2;
+}

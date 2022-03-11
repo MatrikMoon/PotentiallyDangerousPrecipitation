@@ -1,0 +1,9 @@
+syntax = "proto3";
+package proto.model;
+
+option csharp_namespace = "Protos.Models";
+
+message User {
+  string id = 2;
+  string name = 3;
+}
