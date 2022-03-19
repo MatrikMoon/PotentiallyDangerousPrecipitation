@@ -9,7 +9,7 @@ using System.Reflection;
  * (https://github.com/xyonico/BeatSaberSongLoader/blob/master/SongLoaderPlugin/ReflectionUtil.cs)
  */
 
-namespace PotentiallyDangerousPrecipitation
+namespace PotentiallyDangerousPrecipitation.Extensions
 {
     public static class ReflectionUtil
     {

@@ -29,5 +29,16 @@ message Response {
 
 message ConnectResponse {
   Response response = 1;
-  model.User self = 2;
+  models.User self = 2;
+}
+
+message Packet {
+  string id = 1;
+  string from = 2;
+  oneof packet {
+    Command command = 3;
+    Connect connect = 4;
+    Response response = 5;
+    ConnectResponse connect_response = 6;
+  }
 }

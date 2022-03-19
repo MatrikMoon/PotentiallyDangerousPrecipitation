@@ -4,9 +4,9 @@
 
     <ItemGroup>
         <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
-        <InputAssemblies Include="$(OutputPath)\0Harmony.dll" />
         <InputAssemblies Include="$(OutputPath)\Protos.dll" />
         <InputAssemblies Include="$(OutputPath)\protobuf-net.dll" />
+        <InputAssemblies Include="$(OutputPath)\0Harmony.dll" />
     </ItemGroup>
 
     <ILRepack

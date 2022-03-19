@@ -1,8 +1,12 @@
 ﻿using IllusionPlugin;
+using PotentiallyDangerousPrecipitation.Extensions;
 using PotentiallyDangerousPrecipitation.HarmonyPatches;
 using RoR2;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
+using Protos.Models.Packets;
+using System;
 
 namespace PotentiallyDangerousPrecipitation
 {
@@ -19,6 +23,8 @@ namespace PotentiallyDangerousPrecipitation
         public static bool InfiniteRecycling { get; set; }
         public static bool OnlyForgiveMePlease { get; set; }
 
+        private static WsServer _wsServer = new WsServer(10666);
+
         public void OnApplicationQuit()
         {
 
@@ -31,6 +37,34 @@ namespace PotentiallyDangerousPrecipitation
 
             //Hook the item grant functionality
             Patches.Patch();
+
+            //Start the UI server
+            _wsServer.PacketReceived += WsServer_PacketReceived;
+            Task.Run(_wsServer.Start);
+        }
+
+        private async Task WsServer_PacketReceived(ConnectedUser user, Packet packet)
+        {
+            if (packet.packetCase == Packet.packetOneofCase.Connect)
+            {
+                var response = new Packet()
+                {
+                    ConnectResponse = new ConnectResponse()
+                    {
+                        Self = new Protos.Models.User()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Name = "Moon"
+                        },
+                        Response = new Response()
+                        {
+                            Message = "It works",
+                            Type = Response.ResponseType.Success
+                        }
+                    }
+                };
+                await _wsServer.Send(user, response);
+            }
         }
 
         private void Application_logMessageReceivedThreaded(string condition, string stackTrace, LogType type)

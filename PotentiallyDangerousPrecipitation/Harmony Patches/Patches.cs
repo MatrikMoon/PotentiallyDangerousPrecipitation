@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
+using PotentiallyDangerousPrecipitation.Extensions;
 using RoR2;
-using RoR2.Artifacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
 
             Logger.Debug("Patching...");
             foreach (var type in Assembly.GetExecutingAssembly()
-                            .GetTypes()
+                            .GetLoadableTypes()
                             .Where(x => x.IsClass && x.Namespace == typeof(Patches).Namespace))
             {
                 List<MethodInfo> patchedMethods = instance.CreateClassProcessor(type).Patch();
