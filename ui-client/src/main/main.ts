@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { findSteamAppById, findSteamAppByName, findSteamLibraries } from 'find-steam-app';
 
 export default class AppUpdater {
     constructor() {
@@ -120,3 +121,11 @@ app.whenReady()
         });
     })
     .catch(console.log);
+
+ipcMain.on('install-ipa', async (event, arg) => {
+    const test = await findSteamAppById(632360);
+
+    console.log(test);
+
+    mainWindow?.webContents.send('ipa-installed');
+});

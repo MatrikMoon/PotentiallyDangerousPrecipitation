@@ -50,21 +50,19 @@ namespace PotentiallyDangerousPrecipitation
         public async Task Start()
         {
             IPAddress ipv4Address = IPAddress.Any;
-            IPAddress ipv6Address = IPAddress.IPv6Any;
             IPEndPoint localIPV4EndPoint = new IPEndPoint(ipv4Address, port);
-            IPEndPoint localIPV6EndPoint = new IPEndPoint(ipv6Address, port);
 
             ipv4Server = new Socket(ipv4Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            ipv6Server = new Socket(ipv6Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
             ipv4Server.Bind(localIPV4EndPoint);
-            ipv6Server.Bind(localIPV6EndPoint);
-
             ipv4Server.Listen(100);
-            ipv6Server.Listen(100);
 
-            Func<Socket, Task> processClient = async (clientSocket) =>
+            while (Enabled)
             {
+                // Start an asynchronous socket to listen for connections.  
+                Logger.Debug($"Waiting for an IPV4 connection on {ipv4Address}:{port} ...");
+                var clientSocket = await ipv4Server.AcceptAsync();
+                Logger.Debug($"Accepted connection on {ipv4Address}:{port} ...");
+
                 var connectedUser = new ConnectedUser
                 {
                     socket = clientSocket,
@@ -76,8 +74,16 @@ namespace PotentiallyDangerousPrecipitation
                 string headerResponse = string.Empty;
                 if ((ipv4Server != null && ipv4Server.IsBound) || (ipv6Server != null && ipv6Server.IsBound))
                 {
-                    var i = await connectedUser.networkStream.ReadAsync(buffer, 0, 1024);
-                    headerResponse = (Encoding.UTF8.GetString(buffer)).Substring(0, i);
+                    try
+                    {
+                        var i = connectedUser.networkStream.Read(buffer, 0, 1024);
+                        headerResponse = (Encoding.UTF8.GetString(buffer)).Substring(0, i);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.StackTrace);
+                    }
                 }
 
                 if (clientSocket != null)
@@ -124,36 +130,7 @@ namespace PotentiallyDangerousPrecipitation
                 if (ClientConnected != null) await ClientConnected.Invoke(connectedUser);
 
                 ReceiveLoop(connectedUser);
-            };
-
-            Func<Task> ipv4Accept = async () =>
-            {
-                while (Enabled)
-                {
-                    // Start an asynchronous socket to listen for connections.  
-                    Logger.Debug($"Waiting for an IPV4 connection on {ipv4Address}:{port} ...");
-                    var clientSocket = await ipv4Server.AcceptAsync();
-                    Logger.Debug($"Accepted connection on {ipv4Address}:{port} ...");
-
-                    await processClient(clientSocket);
-                }
-            };
-
-            Func<Task> ipv6Accept = async () =>
-            {
-                while (Enabled)
-                {
-                    // Start an asynchronous socket to listen for connections.  
-                    Logger.Debug($"Waiting for an IPV6 connection on {ipv6Address}:{port} ...");
-                    var clientSocket = await ipv6Server.AcceptAsync();
-                    Logger.Debug($"Accpeted connection on {ipv6Address}:{port} ...");
-
-                    await processClient(clientSocket);
-                }
-            };
-
-            await ipv4Accept();
-            //ipv6Accept();
+            }
         }
 
         private async void ReceiveLoop(ConnectedUser player)

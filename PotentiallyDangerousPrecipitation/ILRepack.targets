@@ -1,24 +1,22 @@
 <!-- ILRepack -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Target Name="ILRepacker" AfterTargets="Build">
+	<Target Name="ILRepacker" AfterTargets="Build">
+        <ItemGroup>
+            <InputAssemblies Include="$(OutputPath)$(AssemblyName).dll" />
+            <InputAssemblies Include="$(OutputPath)Protos.dll" />
+            <InputAssemblies Include="$(OutputPath)protobuf-net.dll" />
+            <InputAssemblies Include="$(OutputPath)0Harmony.dll" />
+        </ItemGroup>
 
-    <ItemGroup>
-        <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
-        <InputAssemblies Include="$(OutputPath)\Protos.dll" />
-        <InputAssemblies Include="$(OutputPath)\protobuf-net.dll" />
-        <InputAssemblies Include="$(OutputPath)\0Harmony.dll" />
-    </ItemGroup>
-
-    <ILRepack
-        Parallel="true"
-        InputAssemblies="@(InputAssemblies)"
-        LibraryPath="$(OutputPath)"
-        TargetKind="Dll"
-        Verbose="true"
-        LogFile="$(OutputPath)\log.txt"
-        OutputFile="$(OutputPath)\$(AssemblyName).dll"
-    />
-
+        <ILRepack
+            Parallel="true"
+            InputAssemblies="@(InputAssemblies)"
+            LibraryPath="$(OutputPath);$(MSBuildProjectDirectory)\..\Libraries;M:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed"
+            TargetKind="Dll"
+            Verbose="true"
+            LogFile="$(OutputPath)log.txt"
+            OutputFile="$(OutputPath)$(AssemblyName).dll"
+        />
     </Target>
 </Project>
 <!-- /ILRepack -->

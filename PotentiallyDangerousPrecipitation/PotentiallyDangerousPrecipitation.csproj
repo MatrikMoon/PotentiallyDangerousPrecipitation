@@ -39,7 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.2.2.0\lib\net472\0Harmony.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>M:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Assembly-CSharp.dll</HintPath>
@@ -53,7 +54,8 @@
     <Reference Include="IllusionPlugin">
       <HintPath>M:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\IllusionPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="protobuf-net">
+    <Reference Include="protobuf-net, Version=3.0.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="RoR2">
@@ -62,6 +64,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -99,7 +102,6 @@
     <Compile Include="Extensions\ReflectionUtil.cs" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Protos\Protos.csproj">
       <Project>{f6c447a1-d991-480b-bf7c-c29cd18a6655}</Project>
