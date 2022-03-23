@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld('api', {
         }
     },
     receive: (channel, func) => {
-        let validChannels = ['ipa-installed'];
+        let validChannels = ['ipa-installed-status'];
         if (validChannels.includes(channel)) {
             // Deliberately strip event as it includes `sender`
             ipcRenderer.on(channel, (event, ...args) => func(...args));

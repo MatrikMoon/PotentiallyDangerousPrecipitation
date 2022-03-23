@@ -14,7 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { findSteamAppById, findSteamAppByName, findSteamLibraries } from 'find-steam-app';
+import { isGameInstalled, isGameModded, patchGame } from './pluginInstaller';
 
 export default class AppUpdater {
     constructor() {
@@ -74,11 +74,15 @@ const createWindow = async () => {
 
     mainWindow.loadURL(resolveHtmlPath('index.html'));
 
-    mainWindow.on('ready-to-show', () => {
+    mainWindow.on('ready-to-show', async () => {
         if (!mainWindow) {
             throw new Error('"mainWindow" is not defined');
         }
         mainWindow.show();
+
+        if (!(await isGameModded())) {
+            mainWindow?.webContents.send('ipa-installed-status', false);
+        }
     });
 
     mainWindow.on('closed', () => {
@@ -123,9 +127,7 @@ app.whenReady()
     .catch(console.log);
 
 ipcMain.on('install-ipa', async (event, arg) => {
-    const test = await findSteamAppById(632360);
-
-    console.log(test);
-
-    mainWindow?.webContents.send('ipa-installed');
+    if ((await isGameInstalled()) && !(await isGameModded())) {
+        await patchGame();
+    }
 });
