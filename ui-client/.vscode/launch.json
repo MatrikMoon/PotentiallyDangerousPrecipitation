@@ -7,8 +7,10 @@
             "request": "launch",
             "protocol": "inspector",
             "runtimeExecutable": "npm",
-            "runtimeArgs": ["run", "start:main:debug"],
-            "preLaunchTask": "Start Webpack Dev"
+            "runtimeArgs": ["run", "start"],
+            "env": {
+                "MAIN_ARGS": "--inspect=5858 --remote-debugging-port=9223"
+            }
         },
         {
             "name": "Electron: Renderer",
@@ -16,7 +18,7 @@
             "request": "attach",
             "port": 9223,
             "webRoot": "${workspaceFolder}",
-            "timeout": 30000
+            "timeout": 15000
         }
     ],
     "compounds": [

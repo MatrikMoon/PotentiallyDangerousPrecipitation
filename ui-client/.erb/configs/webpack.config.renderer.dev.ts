@@ -5,10 +5,10 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import chalk from 'chalk';
 import { merge } from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import webpackPaths from './webpack.paths';
 import checkNodeEnv from '../scripts/check-node-env';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
@@ -18,6 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 1212;
 const manifest = path.resolve(webpackPaths.dllPath, 'renderer.json');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const requiredByDLLConfig = module.parent!.filename.includes('webpack.config.renderer.dev.dll');
 
 /**
@@ -144,6 +145,7 @@ const configuration: webpack.Configuration = {
         __filename: false,
     },
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     devServer: {
         port,
@@ -155,6 +157,21 @@ const configuration: webpack.Configuration = {
         },
         historyApiFallback: {
             verbose: true,
+        },
+        onBeforeSetupMiddleware() {
+            console.log('Starting Main Process...');
+            let args = ['run', 'start:main'];
+            if (process.env.MAIN_ARGS) {
+                args = args.concat(['--', ...process.env.MAIN_ARGS.matchAll(/"[^"]+"|[^\s"]+/g)].flat());
+            }
+            spawn('npm', args, {
+                shell: true,
+                env: process.env,
+                stdio: 'inherit',
+            })
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                .on('close', (code: number) => process.exit(code!))
+                .on('error', (spawnError) => console.error(spawnError));
         },
     },
 };

@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import { app } from 'electron';
 import extract from 'extract-zip';
+import find from 'find-process';
 import { existsSync, rmdir, unlink } from 'fs-extra';
 import path from 'path';
 import { promisify } from 'util';
@@ -31,6 +32,13 @@ const runIpaWithGameAsParameter = async () => {
     console.log(stdout);
 };
 
+export const killGameIfRunning = async () => {
+    const riskOfRainProcesses = await find('name', 'Risk of Rain 2');
+    riskOfRainProcesses.forEach((riskOfRainProcess) => {
+        process.kill(riskOfRainProcess.pid);
+    });
+};
+
 export const isGameInstalled = async () => {
     return (await getGamePath()) != null;
 };
@@ -41,11 +49,14 @@ export const isGameModded = async () => {
 };
 
 export const patchGame = async () => {
+    await killGameIfRunning();
     await extractIpaToGameDirectory();
     await runIpaWithGameAsParameter();
 };
 
 export const unpatchGame = async () => {
+    await killGameIfRunning();
+
     const gamePath = (await getGamePath())!;
     const ipaExecutablePath = path.join(gamePath, 'RoRIPA.exe');
     const ipaExecutableConfigPath = path.join(gamePath, 'RoRIPA.exe.config');
