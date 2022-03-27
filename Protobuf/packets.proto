@@ -6,11 +6,44 @@ option csharp_namespace = "Protos.Models.Packets";
 import "models.proto";
 
 message Command {
-  enum CommandTypes {
-    ReturnToMenu = 0;
+  message GiveLunarCoinsCommand {
+    int32 amount = 1;
+    bool to_everyone = 2;
   }
 
-  CommandTypes command_type = 1;
+  message SpawnMountainShrineCommand {
+    int32 amount = 1;
+  }
+
+  message SpawnTeleporterCommand {
+    int32 amount = 1;
+  }
+
+  message StartTeleporterEventCommand {
+
+  }
+
+  message UnlockAllAchievementsCommand {
+
+  }
+
+  message SkipActiveVoteCommand {
+
+  }
+
+  message ResetActiveVoteCommand {
+
+  }
+
+  oneof command {
+    GiveLunarCoinsCommand give_lunar_coins_command = 1;
+    SpawnMountainShrineCommand spawn_mountain_shrine_command = 2;
+    SpawnTeleporterCommand spawn_teleporter_command = 3;
+    StartTeleporterEventCommand start_teleporter_event_command = 4;
+    UnlockAllAchievementsCommand unlock_all_achievements_command = 5;
+    SkipActiveVoteCommand skip_active_vote_command = 6;
+    ResetActiveVoteCommand reset_active_vote_command = 7;
+  }
 }
 
 message Connect {
@@ -30,6 +63,32 @@ message Response {
 message ConnectResponse {
   Response response = 1;
   models.User self = 2;
+  models.State state = 3;
+}
+
+message Event {
+  message PlayerAddedEvent {
+    models.Player player = 1;
+  }
+
+  message PlayerUpdatedEvent {
+    models.Player player = 1;
+  }
+
+  message PlayerLeftEvent {
+    models.Player player = 1;
+  }
+
+  message ToggleUpdatedEvent {
+    models.Toggle toggle = 1;
+  }
+
+  oneof event {
+    PlayerAddedEvent player_added_event = 1;
+    PlayerUpdatedEvent player_updated_event = 2;
+    PlayerLeftEvent player_left_event = 3;
+    ToggleUpdatedEvent toggle_updated_event = 4;
+  }
 }
 
 message Packet {
@@ -40,5 +99,6 @@ message Packet {
     Connect connect = 4;
     Response response = 5;
     ConnectResponse connect_response = 6;
+    Event event = 7;
   }
 }

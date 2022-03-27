@@ -129,5 +129,6 @@ app.whenReady()
 ipcMain.on('install-ipa', async (event, arg) => {
     if ((await isGameInstalled()) && !(await isGameModded())) {
         await patchGame();
+        mainWindow?.webContents.send('ipa-installed-status', await isGameModded());
     }
 });

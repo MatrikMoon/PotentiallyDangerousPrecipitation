@@ -1,12 +1,7 @@
 ﻿using IllusionPlugin;
-using PotentiallyDangerousPrecipitation.Extensions;
 using PotentiallyDangerousPrecipitation.HarmonyPatches;
-using RoR2;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using Protos.Models.Packets;
-using System;
 
 namespace PotentiallyDangerousPrecipitation
 {
@@ -15,15 +10,7 @@ namespace PotentiallyDangerousPrecipitation
         public string Name => "PotentiallyDangerousPrecipitation";
         public  string Version => "0.0.0";
 
-        public static bool PerfectLootChance { get; set; }
-        public static bool PerfectFuelCellChance { get; set; }
-        public static bool PerfectProcItemChance { get; set; }
-        public static bool PerfectLegendaryChance { get; set; }
-        public static bool HighStacks { get; set; }
-        public static bool InfiniteRecycling { get; set; }
-        public static bool OnlyForgiveMePlease { get; set; }
-
-        private static WsServer _wsServer = new WsServer(10666);
+        public static RainServer RainServer { get; set; } = new RainServer(10666);
 
         public void OnApplicationQuit()
         {
@@ -39,32 +26,7 @@ namespace PotentiallyDangerousPrecipitation
             Patches.Patch();
 
             //Start the UI server
-            _wsServer.PacketReceived += WsServer_PacketReceived;
-            Task.Run(_wsServer.Start);
-        }
-
-        private async Task WsServer_PacketReceived(ConnectedUser user, Packet packet)
-        {
-            if (packet.packetCase == Packet.packetOneofCase.Connect)
-            {
-                var response = new Packet()
-                {
-                    ConnectResponse = new ConnectResponse()
-                    {
-                        Self = new Protos.Models.User()
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            Name = "Moon"
-                        },
-                        Response = new Response()
-                        {
-                            Message = "It works",
-                            Type = Response.ResponseType.Success
-                        }
-                    }
-                };
-                await _wsServer.Send(user, response);
-            }
+            Task.Run(RainServer.Start);
         }
 
         private void Application_logMessageReceivedThreaded(string condition, string stackTrace, LogType type)
@@ -103,7 +65,7 @@ namespace PotentiallyDangerousPrecipitation
 
         public void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.CapsLock))
+            /*if (Input.GetKeyDown(KeyCode.CapsLock))
             {
                 PerfectLootChance = !PerfectLootChance;
                 Logger.Debug($"PerfectLootChance: {PerfectLootChance}");
@@ -265,17 +227,17 @@ namespace PotentiallyDangerousPrecipitation
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
-                /*SimpleDialogBox simpleDialogBox = SimpleDialogBox.Create(null);
+                *//*SimpleDialogBox simpleDialogBox = SimpleDialogBox.Create(null);
                 simpleDialogBox.AddCancelButton(CommonLanguageTokens.cancel, Array.Empty<object>());
                 simpleDialogBox.AddActionButton(() =>
                 {
                     //new Form1().Show();
                 }, CommonLanguageTokens.ok, Array.Empty<object>());
                 simpleDialogBox.headerLabel.text = "BAHAHA YOU PRESSED F";
-                simpleDialogBox.descriptionLabel.text = "BAHAHA YOU PRESSED F, AND THIS IS A DESCRIPTION";*/
+                simpleDialogBox.descriptionLabel.text = "BAHAHA YOU PRESSED F, AND THIS IS A DESCRIPTION";*//*
 
                 Chat.AddMessage("</noparse><color=#e5eefc>HELLOAAAA</color><noparse>");
-            }
+            }*/
         }
     }
 }

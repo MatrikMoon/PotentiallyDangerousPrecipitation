@@ -9,37 +9,248 @@ export class Command extends pb_1.Message {
     constructor(
         data?:
             | any[]
-            | {
-                  command_type?: Command.CommandTypes;
-              }
+            | ({} & (
+                  | {
+                        give_lunar_coins_command?: Command.GiveLunarCoinsCommand;
+                        spawn_mountain_shrine_command?: never;
+                        spawn_teleporter_command?: never;
+                        start_teleporter_event_command?: never;
+                        unlock_all_achievements_command?: never;
+                        skip_active_vote_command?: never;
+                        reset_active_vote_command?: never;
+                    }
+                  | {
+                        give_lunar_coins_command?: never;
+                        spawn_mountain_shrine_command?: Command.SpawnMountainShrineCommand;
+                        spawn_teleporter_command?: never;
+                        start_teleporter_event_command?: never;
+                        unlock_all_achievements_command?: never;
+                        skip_active_vote_command?: never;
+                        reset_active_vote_command?: never;
+                    }
+                  | {
+                        give_lunar_coins_command?: never;
+                        spawn_mountain_shrine_command?: never;
+                        spawn_teleporter_command?: Command.SpawnTeleporterCommand;
+                        start_teleporter_event_command?: never;
+                        unlock_all_achievements_command?: never;
+                        skip_active_vote_command?: never;
+                        reset_active_vote_command?: never;
+                    }
+                  | {
+                        give_lunar_coins_command?: never;
+                        spawn_mountain_shrine_command?: never;
+                        spawn_teleporter_command?: never;
+                        start_teleporter_event_command?: Command.StartTeleporterEventCommand;
+                        unlock_all_achievements_command?: never;
+                        skip_active_vote_command?: never;
+                        reset_active_vote_command?: never;
+                    }
+                  | {
+                        give_lunar_coins_command?: never;
+                        spawn_mountain_shrine_command?: never;
+                        spawn_teleporter_command?: never;
+                        start_teleporter_event_command?: never;
+                        unlock_all_achievements_command?: Command.UnlockAllAchievementsCommand;
+                        skip_active_vote_command?: never;
+                        reset_active_vote_command?: never;
+                    }
+                  | {
+                        give_lunar_coins_command?: never;
+                        spawn_mountain_shrine_command?: never;
+                        spawn_teleporter_command?: never;
+                        start_teleporter_event_command?: never;
+                        unlock_all_achievements_command?: never;
+                        skip_active_vote_command?: Command.SkipActiveVoteCommand;
+                        reset_active_vote_command?: never;
+                    }
+                  | {
+                        give_lunar_coins_command?: never;
+                        spawn_mountain_shrine_command?: never;
+                        spawn_teleporter_command?: never;
+                        start_teleporter_event_command?: never;
+                        unlock_all_achievements_command?: never;
+                        skip_active_vote_command?: never;
+                        reset_active_vote_command?: Command.ResetActiveVoteCommand;
+                    }
+              ))
     ) {
         super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], [[1, 2, 3, 4, 5, 6, 7]]);
         if (!Array.isArray(data) && typeof data == 'object') {
-            if ('command_type' in data && data.command_type != undefined) {
-                this.command_type = data.command_type;
+            if ('give_lunar_coins_command' in data && data.give_lunar_coins_command != undefined) {
+                this.give_lunar_coins_command = data.give_lunar_coins_command;
+            }
+            if ('spawn_mountain_shrine_command' in data && data.spawn_mountain_shrine_command != undefined) {
+                this.spawn_mountain_shrine_command = data.spawn_mountain_shrine_command;
+            }
+            if ('spawn_teleporter_command' in data && data.spawn_teleporter_command != undefined) {
+                this.spawn_teleporter_command = data.spawn_teleporter_command;
+            }
+            if ('start_teleporter_event_command' in data && data.start_teleporter_event_command != undefined) {
+                this.start_teleporter_event_command = data.start_teleporter_event_command;
+            }
+            if ('unlock_all_achievements_command' in data && data.unlock_all_achievements_command != undefined) {
+                this.unlock_all_achievements_command = data.unlock_all_achievements_command;
+            }
+            if ('skip_active_vote_command' in data && data.skip_active_vote_command != undefined) {
+                this.skip_active_vote_command = data.skip_active_vote_command;
+            }
+            if ('reset_active_vote_command' in data && data.reset_active_vote_command != undefined) {
+                this.reset_active_vote_command = data.reset_active_vote_command;
             }
         }
     }
-    get command_type() {
-        return pb_1.Message.getField(this, 1) as Command.CommandTypes;
+    get give_lunar_coins_command() {
+        return pb_1.Message.getWrapperField(this, Command.GiveLunarCoinsCommand, 1) as Command.GiveLunarCoinsCommand;
     }
-    set command_type(value: Command.CommandTypes) {
-        pb_1.Message.setField(this, 1, value);
+    set give_lunar_coins_command(value: Command.GiveLunarCoinsCommand) {
+        pb_1.Message.setOneofWrapperField(this, 1, [1, 2, 3, 4, 5, 6, 7], value);
     }
-    static fromObject(data: { command_type?: Command.CommandTypes }) {
+    get spawn_mountain_shrine_command() {
+        return pb_1.Message.getWrapperField(
+            this,
+            Command.SpawnMountainShrineCommand,
+            2
+        ) as Command.SpawnMountainShrineCommand;
+    }
+    set spawn_mountain_shrine_command(value: Command.SpawnMountainShrineCommand) {
+        pb_1.Message.setOneofWrapperField(this, 2, [1, 2, 3, 4, 5, 6, 7], value);
+    }
+    get spawn_teleporter_command() {
+        return pb_1.Message.getWrapperField(this, Command.SpawnTeleporterCommand, 3) as Command.SpawnTeleporterCommand;
+    }
+    set spawn_teleporter_command(value: Command.SpawnTeleporterCommand) {
+        pb_1.Message.setOneofWrapperField(this, 3, [1, 2, 3, 4, 5, 6, 7], value);
+    }
+    get start_teleporter_event_command() {
+        return pb_1.Message.getWrapperField(
+            this,
+            Command.StartTeleporterEventCommand,
+            4
+        ) as Command.StartTeleporterEventCommand;
+    }
+    set start_teleporter_event_command(value: Command.StartTeleporterEventCommand) {
+        pb_1.Message.setOneofWrapperField(this, 4, [1, 2, 3, 4, 5, 6, 7], value);
+    }
+    get unlock_all_achievements_command() {
+        return pb_1.Message.getWrapperField(
+            this,
+            Command.UnlockAllAchievementsCommand,
+            5
+        ) as Command.UnlockAllAchievementsCommand;
+    }
+    set unlock_all_achievements_command(value: Command.UnlockAllAchievementsCommand) {
+        pb_1.Message.setOneofWrapperField(this, 5, [1, 2, 3, 4, 5, 6, 7], value);
+    }
+    get skip_active_vote_command() {
+        return pb_1.Message.getWrapperField(this, Command.SkipActiveVoteCommand, 6) as Command.SkipActiveVoteCommand;
+    }
+    set skip_active_vote_command(value: Command.SkipActiveVoteCommand) {
+        pb_1.Message.setOneofWrapperField(this, 6, [1, 2, 3, 4, 5, 6, 7], value);
+    }
+    get reset_active_vote_command() {
+        return pb_1.Message.getWrapperField(this, Command.ResetActiveVoteCommand, 7) as Command.ResetActiveVoteCommand;
+    }
+    set reset_active_vote_command(value: Command.ResetActiveVoteCommand) {
+        pb_1.Message.setOneofWrapperField(this, 7, [1, 2, 3, 4, 5, 6, 7], value);
+    }
+    get command() {
+        const cases: {
+            [index: number]:
+                | 'none'
+                | 'give_lunar_coins_command'
+                | 'spawn_mountain_shrine_command'
+                | 'spawn_teleporter_command'
+                | 'start_teleporter_event_command'
+                | 'unlock_all_achievements_command'
+                | 'skip_active_vote_command'
+                | 'reset_active_vote_command';
+        } = {
+            0: 'none',
+            1: 'give_lunar_coins_command',
+            2: 'spawn_mountain_shrine_command',
+            3: 'spawn_teleporter_command',
+            4: 'start_teleporter_event_command',
+            5: 'unlock_all_achievements_command',
+            6: 'skip_active_vote_command',
+            7: 'reset_active_vote_command',
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1, 2, 3, 4, 5, 6, 7])];
+    }
+    static fromObject(data: {
+        give_lunar_coins_command?: ReturnType<typeof Command.GiveLunarCoinsCommand.prototype.toObject>;
+        spawn_mountain_shrine_command?: ReturnType<typeof Command.SpawnMountainShrineCommand.prototype.toObject>;
+        spawn_teleporter_command?: ReturnType<typeof Command.SpawnTeleporterCommand.prototype.toObject>;
+        start_teleporter_event_command?: ReturnType<typeof Command.StartTeleporterEventCommand.prototype.toObject>;
+        unlock_all_achievements_command?: ReturnType<typeof Command.UnlockAllAchievementsCommand.prototype.toObject>;
+        skip_active_vote_command?: ReturnType<typeof Command.SkipActiveVoteCommand.prototype.toObject>;
+        reset_active_vote_command?: ReturnType<typeof Command.ResetActiveVoteCommand.prototype.toObject>;
+    }) {
         const message = new Command({});
-        if (data.command_type != null) {
-            message.command_type = data.command_type;
+        if (data.give_lunar_coins_command != null) {
+            message.give_lunar_coins_command = Command.GiveLunarCoinsCommand.fromObject(data.give_lunar_coins_command);
+        }
+        if (data.spawn_mountain_shrine_command != null) {
+            message.spawn_mountain_shrine_command = Command.SpawnMountainShrineCommand.fromObject(
+                data.spawn_mountain_shrine_command
+            );
+        }
+        if (data.spawn_teleporter_command != null) {
+            message.spawn_teleporter_command = Command.SpawnTeleporterCommand.fromObject(data.spawn_teleporter_command);
+        }
+        if (data.start_teleporter_event_command != null) {
+            message.start_teleporter_event_command = Command.StartTeleporterEventCommand.fromObject(
+                data.start_teleporter_event_command
+            );
+        }
+        if (data.unlock_all_achievements_command != null) {
+            message.unlock_all_achievements_command = Command.UnlockAllAchievementsCommand.fromObject(
+                data.unlock_all_achievements_command
+            );
+        }
+        if (data.skip_active_vote_command != null) {
+            message.skip_active_vote_command = Command.SkipActiveVoteCommand.fromObject(data.skip_active_vote_command);
+        }
+        if (data.reset_active_vote_command != null) {
+            message.reset_active_vote_command = Command.ResetActiveVoteCommand.fromObject(
+                data.reset_active_vote_command
+            );
         }
         return message;
     }
     toObject() {
         const data: {
-            command_type?: Command.CommandTypes;
+            give_lunar_coins_command?: ReturnType<typeof Command.GiveLunarCoinsCommand.prototype.toObject>;
+            spawn_mountain_shrine_command?: ReturnType<typeof Command.SpawnMountainShrineCommand.prototype.toObject>;
+            spawn_teleporter_command?: ReturnType<typeof Command.SpawnTeleporterCommand.prototype.toObject>;
+            start_teleporter_event_command?: ReturnType<typeof Command.StartTeleporterEventCommand.prototype.toObject>;
+            unlock_all_achievements_command?: ReturnType<
+                typeof Command.UnlockAllAchievementsCommand.prototype.toObject
+            >;
+            skip_active_vote_command?: ReturnType<typeof Command.SkipActiveVoteCommand.prototype.toObject>;
+            reset_active_vote_command?: ReturnType<typeof Command.ResetActiveVoteCommand.prototype.toObject>;
         } = {};
-        if (this.command_type != null) {
-            data.command_type = this.command_type;
+        if (this.give_lunar_coins_command != null) {
+            data.give_lunar_coins_command = this.give_lunar_coins_command.toObject();
+        }
+        if (this.spawn_mountain_shrine_command != null) {
+            data.spawn_mountain_shrine_command = this.spawn_mountain_shrine_command.toObject();
+        }
+        if (this.spawn_teleporter_command != null) {
+            data.spawn_teleporter_command = this.spawn_teleporter_command.toObject();
+        }
+        if (this.start_teleporter_event_command != null) {
+            data.start_teleporter_event_command = this.start_teleporter_event_command.toObject();
+        }
+        if (this.unlock_all_achievements_command != null) {
+            data.unlock_all_achievements_command = this.unlock_all_achievements_command.toObject();
+        }
+        if (this.skip_active_vote_command != null) {
+            data.skip_active_vote_command = this.skip_active_vote_command.toObject();
+        }
+        if (this.reset_active_vote_command != null) {
+            data.reset_active_vote_command = this.reset_active_vote_command.toObject();
         }
         return data;
     }
@@ -47,7 +258,34 @@ export class Command extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.command_type !== undefined) writer.writeEnum(1, this.command_type);
+        if (this.give_lunar_coins_command !== undefined)
+            writer.writeMessage(1, this.give_lunar_coins_command, () =>
+                this.give_lunar_coins_command.serialize(writer)
+            );
+        if (this.spawn_mountain_shrine_command !== undefined)
+            writer.writeMessage(2, this.spawn_mountain_shrine_command, () =>
+                this.spawn_mountain_shrine_command.serialize(writer)
+            );
+        if (this.spawn_teleporter_command !== undefined)
+            writer.writeMessage(3, this.spawn_teleporter_command, () =>
+                this.spawn_teleporter_command.serialize(writer)
+            );
+        if (this.start_teleporter_event_command !== undefined)
+            writer.writeMessage(4, this.start_teleporter_event_command, () =>
+                this.start_teleporter_event_command.serialize(writer)
+            );
+        if (this.unlock_all_achievements_command !== undefined)
+            writer.writeMessage(5, this.unlock_all_achievements_command, () =>
+                this.unlock_all_achievements_command.serialize(writer)
+            );
+        if (this.skip_active_vote_command !== undefined)
+            writer.writeMessage(6, this.skip_active_vote_command, () =>
+                this.skip_active_vote_command.serialize(writer)
+            );
+        if (this.reset_active_vote_command !== undefined)
+            writer.writeMessage(7, this.reset_active_vote_command, () =>
+                this.reset_active_vote_command.serialize(writer)
+            );
         if (!w) return writer.getResultBuffer();
     }
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Command {
@@ -57,7 +295,52 @@ export class Command extends pb_1.Message {
             if (reader.isEndGroup()) break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.command_type = reader.readEnum();
+                    reader.readMessage(
+                        message.give_lunar_coins_command,
+                        () => (message.give_lunar_coins_command = Command.GiveLunarCoinsCommand.deserialize(reader))
+                    );
+                    break;
+                case 2:
+                    reader.readMessage(
+                        message.spawn_mountain_shrine_command,
+                        () =>
+                            (message.spawn_mountain_shrine_command =
+                                Command.SpawnMountainShrineCommand.deserialize(reader))
+                    );
+                    break;
+                case 3:
+                    reader.readMessage(
+                        message.spawn_teleporter_command,
+                        () => (message.spawn_teleporter_command = Command.SpawnTeleporterCommand.deserialize(reader))
+                    );
+                    break;
+                case 4:
+                    reader.readMessage(
+                        message.start_teleporter_event_command,
+                        () =>
+                            (message.start_teleporter_event_command =
+                                Command.StartTeleporterEventCommand.deserialize(reader))
+                    );
+                    break;
+                case 5:
+                    reader.readMessage(
+                        message.unlock_all_achievements_command,
+                        () =>
+                            (message.unlock_all_achievements_command =
+                                Command.UnlockAllAchievementsCommand.deserialize(reader))
+                    );
+                    break;
+                case 6:
+                    reader.readMessage(
+                        message.skip_active_vote_command,
+                        () => (message.skip_active_vote_command = Command.SkipActiveVoteCommand.deserialize(reader))
+                    );
+                    break;
+                case 7:
+                    reader.readMessage(
+                        message.reset_active_vote_command,
+                        () => (message.reset_active_vote_command = Command.ResetActiveVoteCommand.deserialize(reader))
+                    );
                     break;
                 default:
                     reader.skipField();
@@ -73,8 +356,387 @@ export class Command extends pb_1.Message {
     }
 }
 export namespace Command {
-    export enum CommandTypes {
-        ReturnToMenu = 0,
+    export class GiveLunarCoinsCommand extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      amount?: number;
+                      to_everyone?: boolean;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('amount' in data && data.amount != undefined) {
+                    this.amount = data.amount;
+                }
+                if ('to_everyone' in data && data.to_everyone != undefined) {
+                    this.to_everyone = data.to_everyone;
+                }
+            }
+        }
+        get amount() {
+            return pb_1.Message.getField(this, 1) as number;
+        }
+        set amount(value: number) {
+            pb_1.Message.setField(this, 1, value);
+        }
+        get to_everyone() {
+            return pb_1.Message.getField(this, 2) as boolean;
+        }
+        set to_everyone(value: boolean) {
+            pb_1.Message.setField(this, 2, value);
+        }
+        static fromObject(data: { amount?: number; to_everyone?: boolean }) {
+            const message = new GiveLunarCoinsCommand({});
+            if (data.amount != null) {
+                message.amount = data.amount;
+            }
+            if (data.to_everyone != null) {
+                message.to_everyone = data.to_everyone;
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                amount?: number;
+                to_everyone?: boolean;
+            } = {};
+            if (this.amount != null) {
+                data.amount = this.amount;
+            }
+            if (this.to_everyone != null) {
+                data.to_everyone = this.to_everyone;
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.amount !== undefined) writer.writeInt32(1, this.amount);
+            if (this.to_everyone !== undefined) writer.writeBool(2, this.to_everyone);
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): GiveLunarCoinsCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new GiveLunarCoinsCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        message.amount = reader.readInt32();
+                        break;
+                    case 2:
+                        message.to_everyone = reader.readBool();
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): GiveLunarCoinsCommand {
+            return GiveLunarCoinsCommand.deserialize(bytes);
+        }
+    }
+    export class SpawnMountainShrineCommand extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      amount?: number;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('amount' in data && data.amount != undefined) {
+                    this.amount = data.amount;
+                }
+            }
+        }
+        get amount() {
+            return pb_1.Message.getField(this, 1) as number;
+        }
+        set amount(value: number) {
+            pb_1.Message.setField(this, 1, value);
+        }
+        static fromObject(data: { amount?: number }) {
+            const message = new SpawnMountainShrineCommand({});
+            if (data.amount != null) {
+                message.amount = data.amount;
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                amount?: number;
+            } = {};
+            if (this.amount != null) {
+                data.amount = this.amount;
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.amount !== undefined) writer.writeInt32(1, this.amount);
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SpawnMountainShrineCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new SpawnMountainShrineCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        message.amount = reader.readInt32();
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): SpawnMountainShrineCommand {
+            return SpawnMountainShrineCommand.deserialize(bytes);
+        }
+    }
+    export class SpawnTeleporterCommand extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      amount?: number;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('amount' in data && data.amount != undefined) {
+                    this.amount = data.amount;
+                }
+            }
+        }
+        get amount() {
+            return pb_1.Message.getField(this, 1) as number;
+        }
+        set amount(value: number) {
+            pb_1.Message.setField(this, 1, value);
+        }
+        static fromObject(data: { amount?: number }) {
+            const message = new SpawnTeleporterCommand({});
+            if (data.amount != null) {
+                message.amount = data.amount;
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                amount?: number;
+            } = {};
+            if (this.amount != null) {
+                data.amount = this.amount;
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.amount !== undefined) writer.writeInt32(1, this.amount);
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SpawnTeleporterCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new SpawnTeleporterCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        message.amount = reader.readInt32();
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): SpawnTeleporterCommand {
+            return SpawnTeleporterCommand.deserialize(bytes);
+        }
+    }
+    export class StartTeleporterEventCommand extends pb_1.Message {
+        constructor(data?: any[] | {}) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+            }
+        }
+        static fromObject(data: {}) {
+            const message = new StartTeleporterEventCommand({});
+            return message;
+        }
+        toObject() {
+            const data: {} = {};
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): StartTeleporterEventCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new StartTeleporterEventCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): StartTeleporterEventCommand {
+            return StartTeleporterEventCommand.deserialize(bytes);
+        }
+    }
+    export class UnlockAllAchievementsCommand extends pb_1.Message {
+        constructor(data?: any[] | {}) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+            }
+        }
+        static fromObject(data: {}) {
+            const message = new UnlockAllAchievementsCommand({});
+            return message;
+        }
+        toObject() {
+            const data: {} = {};
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): UnlockAllAchievementsCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new UnlockAllAchievementsCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): UnlockAllAchievementsCommand {
+            return UnlockAllAchievementsCommand.deserialize(bytes);
+        }
+    }
+    export class SkipActiveVoteCommand extends pb_1.Message {
+        constructor(data?: any[] | {}) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+            }
+        }
+        static fromObject(data: {}) {
+            const message = new SkipActiveVoteCommand({});
+            return message;
+        }
+        toObject() {
+            const data: {} = {};
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SkipActiveVoteCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new SkipActiveVoteCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): SkipActiveVoteCommand {
+            return SkipActiveVoteCommand.deserialize(bytes);
+        }
+    }
+    export class ResetActiveVoteCommand extends pb_1.Message {
+        constructor(data?: any[] | {}) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+            }
+        }
+        static fromObject(data: {}) {
+            const message = new ResetActiveVoteCommand({});
+            return message;
+        }
+        toObject() {
+            const data: {} = {};
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ResetActiveVoteCommand {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new ResetActiveVoteCommand();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): ResetActiveVoteCommand {
+            return ResetActiveVoteCommand.deserialize(bytes);
+        }
     }
 }
 export class Connect extends pb_1.Message {
@@ -245,6 +907,7 @@ export class ConnectResponse extends pb_1.Message {
             | {
                   response?: Response;
                   self?: dependency_1.proto.models.User;
+                  state?: dependency_1.proto.models.State;
               }
     ) {
         super();
@@ -255,6 +918,9 @@ export class ConnectResponse extends pb_1.Message {
             }
             if ('self' in data && data.self != undefined) {
                 this.self = data.self;
+            }
+            if ('state' in data && data.state != undefined) {
+                this.state = data.state;
             }
         }
     }
@@ -270,9 +936,20 @@ export class ConnectResponse extends pb_1.Message {
     set self(value: dependency_1.proto.models.User) {
         pb_1.Message.setWrapperField(this, 2, value);
     }
+    get state() {
+        return pb_1.Message.getWrapperField(
+            this,
+            dependency_1.proto.models.State,
+            3
+        ) as dependency_1.proto.models.State;
+    }
+    set state(value: dependency_1.proto.models.State) {
+        pb_1.Message.setWrapperField(this, 3, value);
+    }
     static fromObject(data: {
         response?: ReturnType<typeof Response.prototype.toObject>;
         self?: ReturnType<typeof dependency_1.proto.models.User.prototype.toObject>;
+        state?: ReturnType<typeof dependency_1.proto.models.State.prototype.toObject>;
     }) {
         const message = new ConnectResponse({});
         if (data.response != null) {
@@ -281,18 +958,25 @@ export class ConnectResponse extends pb_1.Message {
         if (data.self != null) {
             message.self = dependency_1.proto.models.User.fromObject(data.self);
         }
+        if (data.state != null) {
+            message.state = dependency_1.proto.models.State.fromObject(data.state);
+        }
         return message;
     }
     toObject() {
         const data: {
             response?: ReturnType<typeof Response.prototype.toObject>;
             self?: ReturnType<typeof dependency_1.proto.models.User.prototype.toObject>;
+            state?: ReturnType<typeof dependency_1.proto.models.State.prototype.toObject>;
         } = {};
         if (this.response != null) {
             data.response = this.response.toObject();
         }
         if (this.self != null) {
             data.self = this.self.toObject();
+        }
+        if (this.state != null) {
+            data.state = this.state.toObject();
         }
         return data;
     }
@@ -302,6 +986,7 @@ export class ConnectResponse extends pb_1.Message {
         const writer = w || new pb_1.BinaryWriter();
         if (this.response !== undefined) writer.writeMessage(1, this.response, () => this.response.serialize(writer));
         if (this.self !== undefined) writer.writeMessage(2, this.self, () => this.self.serialize(writer));
+        if (this.state !== undefined) writer.writeMessage(3, this.state, () => this.state.serialize(writer));
         if (!w) return writer.getResultBuffer();
     }
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ConnectResponse {
@@ -319,6 +1004,12 @@ export class ConnectResponse extends pb_1.Message {
                         () => (message.self = dependency_1.proto.models.User.deserialize(reader))
                     );
                     break;
+                case 3:
+                    reader.readMessage(
+                        message.state,
+                        () => (message.state = dependency_1.proto.models.State.deserialize(reader))
+                    );
+                    break;
                 default:
                     reader.skipField();
             }
@@ -330,6 +1021,492 @@ export class ConnectResponse extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): ConnectResponse {
         return ConnectResponse.deserialize(bytes);
+    }
+}
+export class Event extends pb_1.Message {
+    constructor(
+        data?:
+            | any[]
+            | ({} & (
+                  | {
+                        player_added_event?: Event.PlayerAddedEvent;
+                        player_updated_event?: never;
+                        player_left_event?: never;
+                        toggle_updated_event?: never;
+                    }
+                  | {
+                        player_added_event?: never;
+                        player_updated_event?: Event.PlayerUpdatedEvent;
+                        player_left_event?: never;
+                        toggle_updated_event?: never;
+                    }
+                  | {
+                        player_added_event?: never;
+                        player_updated_event?: never;
+                        player_left_event?: Event.PlayerLeftEvent;
+                        toggle_updated_event?: never;
+                    }
+                  | {
+                        player_added_event?: never;
+                        player_updated_event?: never;
+                        player_left_event?: never;
+                        toggle_updated_event?: Event.ToggleUpdatedEvent;
+                    }
+              ))
+    ) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], [[1, 2, 3, 4]]);
+        if (!Array.isArray(data) && typeof data == 'object') {
+            if ('player_added_event' in data && data.player_added_event != undefined) {
+                this.player_added_event = data.player_added_event;
+            }
+            if ('player_updated_event' in data && data.player_updated_event != undefined) {
+                this.player_updated_event = data.player_updated_event;
+            }
+            if ('player_left_event' in data && data.player_left_event != undefined) {
+                this.player_left_event = data.player_left_event;
+            }
+            if ('toggle_updated_event' in data && data.toggle_updated_event != undefined) {
+                this.toggle_updated_event = data.toggle_updated_event;
+            }
+        }
+    }
+    get player_added_event() {
+        return pb_1.Message.getWrapperField(this, Event.PlayerAddedEvent, 1) as Event.PlayerAddedEvent;
+    }
+    set player_added_event(value: Event.PlayerAddedEvent) {
+        pb_1.Message.setOneofWrapperField(this, 1, [1, 2, 3, 4], value);
+    }
+    get player_updated_event() {
+        return pb_1.Message.getWrapperField(this, Event.PlayerUpdatedEvent, 2) as Event.PlayerUpdatedEvent;
+    }
+    set player_updated_event(value: Event.PlayerUpdatedEvent) {
+        pb_1.Message.setOneofWrapperField(this, 2, [1, 2, 3, 4], value);
+    }
+    get player_left_event() {
+        return pb_1.Message.getWrapperField(this, Event.PlayerLeftEvent, 3) as Event.PlayerLeftEvent;
+    }
+    set player_left_event(value: Event.PlayerLeftEvent) {
+        pb_1.Message.setOneofWrapperField(this, 3, [1, 2, 3, 4], value);
+    }
+    get toggle_updated_event() {
+        return pb_1.Message.getWrapperField(this, Event.ToggleUpdatedEvent, 4) as Event.ToggleUpdatedEvent;
+    }
+    set toggle_updated_event(value: Event.ToggleUpdatedEvent) {
+        pb_1.Message.setOneofWrapperField(this, 4, [1, 2, 3, 4], value);
+    }
+    get event() {
+        const cases: {
+            [index: number]:
+                | 'none'
+                | 'player_added_event'
+                | 'player_updated_event'
+                | 'player_left_event'
+                | 'toggle_updated_event';
+        } = {
+            0: 'none',
+            1: 'player_added_event',
+            2: 'player_updated_event',
+            3: 'player_left_event',
+            4: 'toggle_updated_event',
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1, 2, 3, 4])];
+    }
+    static fromObject(data: {
+        player_added_event?: ReturnType<typeof Event.PlayerAddedEvent.prototype.toObject>;
+        player_updated_event?: ReturnType<typeof Event.PlayerUpdatedEvent.prototype.toObject>;
+        player_left_event?: ReturnType<typeof Event.PlayerLeftEvent.prototype.toObject>;
+        toggle_updated_event?: ReturnType<typeof Event.ToggleUpdatedEvent.prototype.toObject>;
+    }) {
+        const message = new Event({});
+        if (data.player_added_event != null) {
+            message.player_added_event = Event.PlayerAddedEvent.fromObject(data.player_added_event);
+        }
+        if (data.player_updated_event != null) {
+            message.player_updated_event = Event.PlayerUpdatedEvent.fromObject(data.player_updated_event);
+        }
+        if (data.player_left_event != null) {
+            message.player_left_event = Event.PlayerLeftEvent.fromObject(data.player_left_event);
+        }
+        if (data.toggle_updated_event != null) {
+            message.toggle_updated_event = Event.ToggleUpdatedEvent.fromObject(data.toggle_updated_event);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            player_added_event?: ReturnType<typeof Event.PlayerAddedEvent.prototype.toObject>;
+            player_updated_event?: ReturnType<typeof Event.PlayerUpdatedEvent.prototype.toObject>;
+            player_left_event?: ReturnType<typeof Event.PlayerLeftEvent.prototype.toObject>;
+            toggle_updated_event?: ReturnType<typeof Event.ToggleUpdatedEvent.prototype.toObject>;
+        } = {};
+        if (this.player_added_event != null) {
+            data.player_added_event = this.player_added_event.toObject();
+        }
+        if (this.player_updated_event != null) {
+            data.player_updated_event = this.player_updated_event.toObject();
+        }
+        if (this.player_left_event != null) {
+            data.player_left_event = this.player_left_event.toObject();
+        }
+        if (this.toggle_updated_event != null) {
+            data.toggle_updated_event = this.toggle_updated_event.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.player_added_event !== undefined)
+            writer.writeMessage(1, this.player_added_event, () => this.player_added_event.serialize(writer));
+        if (this.player_updated_event !== undefined)
+            writer.writeMessage(2, this.player_updated_event, () => this.player_updated_event.serialize(writer));
+        if (this.player_left_event !== undefined)
+            writer.writeMessage(3, this.player_left_event, () => this.player_left_event.serialize(writer));
+        if (this.toggle_updated_event !== undefined)
+            writer.writeMessage(4, this.toggle_updated_event, () => this.toggle_updated_event.serialize(writer));
+        if (!w) return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Event {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+            message = new Event();
+        while (reader.nextField()) {
+            if (reader.isEndGroup()) break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(
+                        message.player_added_event,
+                        () => (message.player_added_event = Event.PlayerAddedEvent.deserialize(reader))
+                    );
+                    break;
+                case 2:
+                    reader.readMessage(
+                        message.player_updated_event,
+                        () => (message.player_updated_event = Event.PlayerUpdatedEvent.deserialize(reader))
+                    );
+                    break;
+                case 3:
+                    reader.readMessage(
+                        message.player_left_event,
+                        () => (message.player_left_event = Event.PlayerLeftEvent.deserialize(reader))
+                    );
+                    break;
+                case 4:
+                    reader.readMessage(
+                        message.toggle_updated_event,
+                        () => (message.toggle_updated_event = Event.ToggleUpdatedEvent.deserialize(reader))
+                    );
+                    break;
+                default:
+                    reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): Event {
+        return Event.deserialize(bytes);
+    }
+}
+export namespace Event {
+    export class PlayerAddedEvent extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      player?: dependency_1.proto.models.Player;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('player' in data && data.player != undefined) {
+                    this.player = data.player;
+                }
+            }
+        }
+        get player() {
+            return pb_1.Message.getWrapperField(
+                this,
+                dependency_1.proto.models.Player,
+                1
+            ) as dependency_1.proto.models.Player;
+        }
+        set player(value: dependency_1.proto.models.Player) {
+            pb_1.Message.setWrapperField(this, 1, value);
+        }
+        static fromObject(data: { player?: ReturnType<typeof dependency_1.proto.models.Player.prototype.toObject> }) {
+            const message = new PlayerAddedEvent({});
+            if (data.player != null) {
+                message.player = dependency_1.proto.models.Player.fromObject(data.player);
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                player?: ReturnType<typeof dependency_1.proto.models.Player.prototype.toObject>;
+            } = {};
+            if (this.player != null) {
+                data.player = this.player.toObject();
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.player !== undefined) writer.writeMessage(1, this.player, () => this.player.serialize(writer));
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): PlayerAddedEvent {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new PlayerAddedEvent();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(
+                            message.player,
+                            () => (message.player = dependency_1.proto.models.Player.deserialize(reader))
+                        );
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): PlayerAddedEvent {
+            return PlayerAddedEvent.deserialize(bytes);
+        }
+    }
+    export class PlayerUpdatedEvent extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      player?: dependency_1.proto.models.Player;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('player' in data && data.player != undefined) {
+                    this.player = data.player;
+                }
+            }
+        }
+        get player() {
+            return pb_1.Message.getWrapperField(
+                this,
+                dependency_1.proto.models.Player,
+                1
+            ) as dependency_1.proto.models.Player;
+        }
+        set player(value: dependency_1.proto.models.Player) {
+            pb_1.Message.setWrapperField(this, 1, value);
+        }
+        static fromObject(data: { player?: ReturnType<typeof dependency_1.proto.models.Player.prototype.toObject> }) {
+            const message = new PlayerUpdatedEvent({});
+            if (data.player != null) {
+                message.player = dependency_1.proto.models.Player.fromObject(data.player);
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                player?: ReturnType<typeof dependency_1.proto.models.Player.prototype.toObject>;
+            } = {};
+            if (this.player != null) {
+                data.player = this.player.toObject();
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.player !== undefined) writer.writeMessage(1, this.player, () => this.player.serialize(writer));
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): PlayerUpdatedEvent {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new PlayerUpdatedEvent();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(
+                            message.player,
+                            () => (message.player = dependency_1.proto.models.Player.deserialize(reader))
+                        );
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): PlayerUpdatedEvent {
+            return PlayerUpdatedEvent.deserialize(bytes);
+        }
+    }
+    export class PlayerLeftEvent extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      player?: dependency_1.proto.models.Player;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('player' in data && data.player != undefined) {
+                    this.player = data.player;
+                }
+            }
+        }
+        get player() {
+            return pb_1.Message.getWrapperField(
+                this,
+                dependency_1.proto.models.Player,
+                1
+            ) as dependency_1.proto.models.Player;
+        }
+        set player(value: dependency_1.proto.models.Player) {
+            pb_1.Message.setWrapperField(this, 1, value);
+        }
+        static fromObject(data: { player?: ReturnType<typeof dependency_1.proto.models.Player.prototype.toObject> }) {
+            const message = new PlayerLeftEvent({});
+            if (data.player != null) {
+                message.player = dependency_1.proto.models.Player.fromObject(data.player);
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                player?: ReturnType<typeof dependency_1.proto.models.Player.prototype.toObject>;
+            } = {};
+            if (this.player != null) {
+                data.player = this.player.toObject();
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.player !== undefined) writer.writeMessage(1, this.player, () => this.player.serialize(writer));
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): PlayerLeftEvent {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new PlayerLeftEvent();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(
+                            message.player,
+                            () => (message.player = dependency_1.proto.models.Player.deserialize(reader))
+                        );
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): PlayerLeftEvent {
+            return PlayerLeftEvent.deserialize(bytes);
+        }
+    }
+    export class ToggleUpdatedEvent extends pb_1.Message {
+        constructor(
+            data?:
+                | any[]
+                | {
+                      toggle?: dependency_1.proto.models.Toggle;
+                  }
+        ) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
+            if (!Array.isArray(data) && typeof data == 'object') {
+                if ('toggle' in data && data.toggle != undefined) {
+                    this.toggle = data.toggle;
+                }
+            }
+        }
+        get toggle() {
+            return pb_1.Message.getWrapperField(
+                this,
+                dependency_1.proto.models.Toggle,
+                1
+            ) as dependency_1.proto.models.Toggle;
+        }
+        set toggle(value: dependency_1.proto.models.Toggle) {
+            pb_1.Message.setWrapperField(this, 1, value);
+        }
+        static fromObject(data: { toggle?: ReturnType<typeof dependency_1.proto.models.Toggle.prototype.toObject> }) {
+            const message = new ToggleUpdatedEvent({});
+            if (data.toggle != null) {
+                message.toggle = dependency_1.proto.models.Toggle.fromObject(data.toggle);
+            }
+            return message;
+        }
+        toObject() {
+            const data: {
+                toggle?: ReturnType<typeof dependency_1.proto.models.Toggle.prototype.toObject>;
+            } = {};
+            if (this.toggle != null) {
+                data.toggle = this.toggle.toObject();
+            }
+            return data;
+        }
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.toggle !== undefined) writer.writeMessage(1, this.toggle, () => this.toggle.serialize(writer));
+            if (!w) return writer.getResultBuffer();
+        }
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ToggleUpdatedEvent {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+                message = new ToggleUpdatedEvent();
+            while (reader.nextField()) {
+                if (reader.isEndGroup()) break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(
+                            message.toggle,
+                            () => (message.toggle = dependency_1.proto.models.Toggle.deserialize(reader))
+                        );
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes: Uint8Array): ToggleUpdatedEvent {
+            return ToggleUpdatedEvent.deserialize(bytes);
+        }
     }
 }
 export class Packet extends pb_1.Message {
@@ -345,29 +1522,40 @@ export class Packet extends pb_1.Message {
                         connect?: never;
                         response?: never;
                         connect_response?: never;
+                        event?: never;
                     }
                   | {
                         command?: never;
                         connect?: Connect;
                         response?: never;
                         connect_response?: never;
+                        event?: never;
                     }
                   | {
                         command?: never;
                         connect?: never;
                         response?: Response;
                         connect_response?: never;
+                        event?: never;
                     }
                   | {
                         command?: never;
                         connect?: never;
                         response?: never;
                         connect_response?: ConnectResponse;
+                        event?: never;
+                    }
+                  | {
+                        command?: never;
+                        connect?: never;
+                        response?: never;
+                        connect_response?: never;
+                        event?: Event;
                     }
               ))
     ) {
         super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], [[3, 4, 5, 6]]);
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], [[3, 4, 5, 6, 7]]);
         if (!Array.isArray(data) && typeof data == 'object') {
             if ('id' in data && data.id != undefined) {
                 this.id = data.id;
@@ -387,6 +1575,9 @@ export class Packet extends pb_1.Message {
             if ('connect_response' in data && data.connect_response != undefined) {
                 this.connect_response = data.connect_response;
             }
+            if ('event' in data && data.event != undefined) {
+                this.event = data.event;
+            }
         }
     }
     get id() {
@@ -405,37 +1596,44 @@ export class Packet extends pb_1.Message {
         return pb_1.Message.getWrapperField(this, Command, 3) as Command;
     }
     set command(value: Command) {
-        pb_1.Message.setOneofWrapperField(this, 3, [3, 4, 5, 6], value);
+        pb_1.Message.setOneofWrapperField(this, 3, [3, 4, 5, 6, 7], value);
     }
     get connect() {
         return pb_1.Message.getWrapperField(this, Connect, 4) as Connect;
     }
     set connect(value: Connect) {
-        pb_1.Message.setOneofWrapperField(this, 4, [3, 4, 5, 6], value);
+        pb_1.Message.setOneofWrapperField(this, 4, [3, 4, 5, 6, 7], value);
     }
     get response() {
         return pb_1.Message.getWrapperField(this, Response, 5) as Response;
     }
     set response(value: Response) {
-        pb_1.Message.setOneofWrapperField(this, 5, [3, 4, 5, 6], value);
+        pb_1.Message.setOneofWrapperField(this, 5, [3, 4, 5, 6, 7], value);
     }
     get connect_response() {
         return pb_1.Message.getWrapperField(this, ConnectResponse, 6) as ConnectResponse;
     }
     set connect_response(value: ConnectResponse) {
-        pb_1.Message.setOneofWrapperField(this, 6, [3, 4, 5, 6], value);
+        pb_1.Message.setOneofWrapperField(this, 6, [3, 4, 5, 6, 7], value);
+    }
+    get event() {
+        return pb_1.Message.getWrapperField(this, Event, 7) as Event;
+    }
+    set event(value: Event) {
+        pb_1.Message.setOneofWrapperField(this, 7, [3, 4, 5, 6, 7], value);
     }
     get packet() {
         const cases: {
-            [index: number]: 'none' | 'command' | 'connect' | 'response' | 'connect_response';
+            [index: number]: 'none' | 'command' | 'connect' | 'response' | 'connect_response' | 'event';
         } = {
             0: 'none',
             3: 'command',
             4: 'connect',
             5: 'response',
             6: 'connect_response',
+            7: 'event',
         };
-        return cases[pb_1.Message.computeOneofCase(this, [3, 4, 5, 6])];
+        return cases[pb_1.Message.computeOneofCase(this, [3, 4, 5, 6, 7])];
     }
     static fromObject(data: {
         id?: string;
@@ -444,6 +1642,7 @@ export class Packet extends pb_1.Message {
         connect?: ReturnType<typeof Connect.prototype.toObject>;
         response?: ReturnType<typeof Response.prototype.toObject>;
         connect_response?: ReturnType<typeof ConnectResponse.prototype.toObject>;
+        event?: ReturnType<typeof Event.prototype.toObject>;
     }) {
         const message = new Packet({});
         if (data.id != null) {
@@ -464,6 +1663,9 @@ export class Packet extends pb_1.Message {
         if (data.connect_response != null) {
             message.connect_response = ConnectResponse.fromObject(data.connect_response);
         }
+        if (data.event != null) {
+            message.event = Event.fromObject(data.event);
+        }
         return message;
     }
     toObject() {
@@ -474,6 +1676,7 @@ export class Packet extends pb_1.Message {
             connect?: ReturnType<typeof Connect.prototype.toObject>;
             response?: ReturnType<typeof Response.prototype.toObject>;
             connect_response?: ReturnType<typeof ConnectResponse.prototype.toObject>;
+            event?: ReturnType<typeof Event.prototype.toObject>;
         } = {};
         if (this.id != null) {
             data.id = this.id;
@@ -493,6 +1696,9 @@ export class Packet extends pb_1.Message {
         if (this.connect_response != null) {
             data.connect_response = this.connect_response.toObject();
         }
+        if (this.event != null) {
+            data.event = this.event.toObject();
+        }
         return data;
     }
     serialize(): Uint8Array;
@@ -506,6 +1712,7 @@ export class Packet extends pb_1.Message {
         if (this.response !== undefined) writer.writeMessage(5, this.response, () => this.response.serialize(writer));
         if (this.connect_response !== undefined)
             writer.writeMessage(6, this.connect_response, () => this.connect_response.serialize(writer));
+        if (this.event !== undefined) writer.writeMessage(7, this.event, () => this.event.serialize(writer));
         if (!w) return writer.getResultBuffer();
     }
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Packet {
@@ -534,6 +1741,9 @@ export class Packet extends pb_1.Message {
                         message.connect_response,
                         () => (message.connect_response = ConnectResponse.deserialize(reader))
                     );
+                    break;
+                case 7:
+                    reader.readMessage(message.event, () => (message.event = Event.deserialize(reader)));
                     break;
                 default:
                     reader.skipField();

@@ -46,9 +46,11 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         [HarmonyPatch("AttemptGrant")]
         static bool Prefix(ref PickupDef.GrantContext context)
         {
+            var highStacks = Precipitation.RainServer.GetToggle("high_stacks");
+
             Inventory inventory = context.body.inventory;
             PickupDef pickupDef = PickupCatalog.GetPickupDef(context.controller.pickupIndex);
-            inventory.GiveItem((pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None, Precipitation.HighStacks ? 10 : 1);
+            inventory.GiveItem((pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None, highStacks ? 10 : 1);
             context.shouldDestroy = true;
             context.shouldNotify = true;
             return false;
@@ -102,8 +104,10 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
                 return false;
             }
 
-            uint pickupQuantity = Precipitation.HighStacks ? 10u : 1u;
-            if (master.inventory && !Precipitation.HighStacks)
+            var highStacks = Precipitation.RainServer.GetToggle("high_stacks");
+
+            uint pickupQuantity = highStacks ? 10u : 1u;
+            if (master.inventory && !highStacks)
             {
                 PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
                 ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
@@ -129,8 +133,9 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         [HarmonyPatch(new[] { typeof(bool) })]
         static bool Prefix(GenericPickupController __instance, bool value)
         {
-            if (Precipitation.InfiniteRecycling) Logger.Debug("Prevented recycler from setting!");
-            return !Precipitation.InfiniteRecycling;
+            var toggle = Precipitation.RainServer.GetToggle("infinite_recycling");
+            if (toggle) Logger.Debug("Prevented recycler from setting!");
+            return !toggle;
         }
     }
 
@@ -149,7 +154,8 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         [HarmonyPatch(new[] { typeof(float), typeof(GameObject)})]
         static bool Prefix(ref float __result)
         {
-            if (Precipitation.PerfectLootChance)
+            var toggle = Precipitation.RainServer.GetToggle("perfect_loot_chance");
+            if (toggle)
             {
                 __result = 100;
                 return false;
@@ -182,7 +188,12 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
         [HarmonyPatch(new[] { typeof(Xoroshiro128Plus) })]
         static bool Prefix(Xoroshiro128Plus rng, ref PickupIndex __result)
         {
-            if (Precipitation.PerfectFuelCellChance)
+            var perfectFuelCellChance = Precipitation.RainServer.GetToggle("perfect_fuel_cell_chance");
+            var perfectProcItemChance = Precipitation.RainServer.GetToggle("perfect_proc_item_chance");
+            var perfectLegendaryChance = Precipitation.RainServer.GetToggle("perfect_legendary_chance");
+            var onlyForgiveMePlease = Precipitation.RainServer.GetToggle("only_forgive_me_please");
+
+            if (perfectFuelCellChance)
             {
                 __result = rng.NextElementUniform(new List<PickupIndex>() {
                     PickupCatalog.FindPickupIndex("ItemIndex.EquipmentMagazine"),
@@ -190,7 +201,7 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
                 });
                 return false;
             }
-            else if (Precipitation.PerfectProcItemChance)
+            else if (perfectProcItemChance)
             {
                 __result = rng.NextElementUniform(new List<PickupIndex>() {
                     PickupCatalog.FindPickupIndex("ItemIndex.ChainLightning"),
@@ -206,12 +217,12 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
                 });
                 return false;
             }
-            else if (Precipitation.PerfectLegendaryChance)
+            else if (perfectLegendaryChance)
             {
                 __result = rng.NextElementUniform(Run.instance.availableTier3DropList);
                 return false;
             }
-            else if (Precipitation.OnlyForgiveMePlease)
+            else if (onlyForgiveMePlease)
             {
                 __result = rng.NextElementUniform(new List<PickupIndex>() {
                     PickupCatalog.FindPickupIndex("EquipmentIndex.SoulCorruptor"),

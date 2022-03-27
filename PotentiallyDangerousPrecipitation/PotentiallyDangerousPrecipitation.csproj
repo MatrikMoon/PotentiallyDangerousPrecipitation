@@ -96,6 +96,7 @@
     <Compile Include="Precipitation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\ProtobufExtensions.cs" />
+    <Compile Include="RainServer.cs" />
     <Compile Include="WsServer.cs" />
   </ItemGroup>
   <ItemGroup>
