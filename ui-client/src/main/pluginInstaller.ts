@@ -60,20 +60,20 @@ export const unpatchGame = async () => {
     const gamePath = (await getGamePath())!;
     const ipaExecutablePath = path.join(gamePath, 'RoRIPA.exe');
     const ipaExecutableConfigPath = path.join(gamePath, 'RoRIPA.exe.config');
-    const ipaExecutablePdbPath = path.join(gamePath, 'RoRIPA.exe.pdb');
+    const ipaExecutablePdbPath = path.join(gamePath, 'RoRIPA.pdb');
     const ipaFolderPath = path.join(gamePath, 'IPA');
     const pluginsFolderPath = path.join(gamePath, 'Plugins');
     const monoCecilPath = path.join(gamePath, 'Mono.Cecil.dll');
 
     const gameExecutablePath = path.join((await getGamePath())!, 'Risk of Rain 2.exe');
     const execPromise = promisify(exec);
-    const { stdout } = await execPromise(`"${ipaExecutablePath}" "${gameExecutablePath}" --revert`);
+    const { stdout } = await execPromise(`"${ipaExecutablePath}" "${gameExecutablePath}" --revert --nowait`);
     console.log(stdout);
 
     await unlink(ipaExecutablePath);
     await unlink(ipaExecutableConfigPath);
     await unlink(ipaExecutablePdbPath);
     await unlink(monoCecilPath);
-    await rmdir(ipaFolderPath);
-    await rmdir(pluginsFolderPath);
+    await rmdir(ipaFolderPath, { recursive: true });
+    await rmdir(pluginsFolderPath, { recursive: true });
 };

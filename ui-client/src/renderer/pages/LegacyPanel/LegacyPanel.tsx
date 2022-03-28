@@ -1,17 +1,17 @@
-import './MainPage.scss';
+import './LegacyPanel.scss';
 import { proto } from '../../proto/models';
-import { FormControlLabel, FormGroup, Switch } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { Event, Packet } from 'renderer/proto/packets';
-import ProgressMoon from '../ProgressMoon/ProgressMoon';
+import { FButton } from '../../components/FButton/FButton';
 
 type Props = {
     toggles: proto.models.Toggle[];
     socket: WebSocket | null;
 };
 
-const MainPage = (props: Props) => {
+const LegacyPanel = (props: Props) => {
     return (
-        <div className='mainPage'>
+        <div className='legacyPanel'>
             <FormGroup>
                 {props.toggles.map((x) => (
                     <FormControlLabel
@@ -36,9 +36,22 @@ const MainPage = (props: Props) => {
                     />
                 ))}
             </FormGroup>
-            <ProgressMoon />
+            <FormGroup>
+                <div className='buttonColumn'>
+                    <FButton text='Give 20m Lunar Coins (Self)' textColor='#606060' />
+                    <FButton text='Give 20m Lunar Coins (Everyone)' textColor='#606060' />
+                    <FButton text='Spawn Shrine of the Mountain' textColor='#606060' />
+                    <FButton text='Spawn Shrine of the Mountain (50x)' textColor='#606060' />
+                    <FButton text='Spawn Teleporter' textColor='#606060' />
+                    <FButton text='Spawn Teleporter (50x)' textColor='#606060' />
+                    <FButton text='Start Teleporter Event' textColor='#606060' />
+                    <FButton text='Unlock All Achievements (Permanent)' textColor='#606060' />
+                    <FButton text='Skip Active Vote' textColor='#606060' />
+                    <FButton text='Reset Active Vote' textColor='#606060' />
+                </div>
+            </FormGroup>
         </div>
     );
 };
 
-export default MainPage;
+export default LegacyPanel;

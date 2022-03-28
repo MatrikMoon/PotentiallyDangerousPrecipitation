@@ -6,8 +6,9 @@ import SpanWithEllipses from './components/SpanWithEllipses/spanWithEllipses';
 import SplashScreen from './components/SplashScreen/SplashScreen';
 import { Packet, Connect, Response } from './proto/packets';
 import { proto } from './proto/models';
-import MainPage from './components/MainPage/MainPage';
+import TabControl from './pages/TabControl/TabControl';
 import { connectWs as connectToRainServer } from './RainClientWrapper';
+import ProgressMoon from './components/ProgressMoon/ProgressMoon';
 
 const Main = () => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -112,7 +113,7 @@ const Main = () => {
     }, []);
 
     return (
-        <div>
+        <>
             {!connectedToGame && (
                 <>
                     <SplashScreen />
@@ -135,8 +136,9 @@ const Main = () => {
                     )}
                 </>
             )}
-            {connectedToGame && <MainPage socket={socket} toggles={toggles} />}
-        </div>
+            {connectedToGame && <TabControl socket={socket} toggles={toggles} />}
+            <ProgressMoon />
+        </>
     );
 };
 
