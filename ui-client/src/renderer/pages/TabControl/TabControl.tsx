@@ -1,8 +1,8 @@
 import './TabControl.scss';
-import { proto } from '../../proto/models';
 import { Box, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import LegacyPanel from '../LegacyPanel/LegacyPanel';
+import { Action, Toggle } from '../../proto/models';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -21,7 +21,8 @@ function TabPanel(props: TabPanelProps) {
 }
 
 type Props = {
-    toggles: proto.models.Toggle[];
+    toggles: Toggle[];
+    actions: Action[];
     socket: WebSocket | null;
 };
 
@@ -47,7 +48,7 @@ const TabControl = (props: Props) => {
                     <Tab label='Experimental' disabled />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <LegacyPanel toggles={props.toggles} socket={props.socket} />
+                    <LegacyPanel toggles={props.toggles} actions={props.actions} socket={props.socket} />
                 </TabPanel>
             </Box>
         </div>

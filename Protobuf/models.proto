@@ -43,6 +43,23 @@ message Toggle {
   bool value = 3;
 }
 
+message Action {
+  string id = 1;
+  string name = 2;
+  
+  //Control types
+  bool text_box = 3;
+  string text_box_label = 4;
+  bool check_box = 5;
+  string check_box_label = 6;
+
+  //Extra bits, todo: refactor
+  int32 integer = 7;
+  string string = 8;
+  float float = 9;
+  bool boolean = 10;
+}
+
 message State {
   enum GameStates {
     InMenu = 0;
@@ -50,12 +67,13 @@ message State {
     //TODO: Add specific game types?
   }
 
-  //Toggle States
+  //Toggle/Action States
   repeated Toggle toggles = 1;
+  repeated Action actions = 2;
 
   //GameState
-  GameStates game_state = 2;
-  repeated Player players = 3;
-  string current_map = 4;
-  int32 current_stage_number = 5;
+  GameStates game_state = 3;
+  repeated Player players = 4;
+  string current_map = 5;
+  int32 current_stage_number = 6;
 }

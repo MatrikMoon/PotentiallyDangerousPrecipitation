@@ -1,13 +1,30 @@
 import './LegacyPanel.scss';
-import { proto } from '../../proto/models';
-import { Checkbox, FormControlLabel, FormGroup, Switch } from '@mui/material';
-import { Event, Packet } from 'renderer/proto/packets';
+import { Toggle, Action } from '../../proto/models';
+import { Checkbox, createTheme, FormControlLabel, FormGroup, Switch, TextField, ThemeProvider } from '@mui/material';
+import { Command, CommandDoActionCommand, Event, EventToggleUpdatedEvent, Packet } from 'renderer/proto/packets';
 import { FButton } from '../../components/FButton/FButton';
+import { useState } from 'react';
 
 type Props = {
-    toggles: proto.models.Toggle[];
+    toggles: Toggle[];
+    actions: Action[];
     socket: WebSocket | null;
 };
+
+const theme = createTheme({
+    palette: {
+        background: {
+            paper: '#fff',
+        },
+        text: {
+            primary: '#173A5E',
+            secondary: '#46505A',
+        },
+        action: {
+            active: '#001E3C',
+        },
+    },
+});
 
 const LegacyPanel = (props: Props) => {
     return (
@@ -23,7 +40,7 @@ const LegacyPanel = (props: Props) => {
                                     if (props.socket) {
                                         const packet = new Packet();
                                         packet.event = new Event();
-                                        packet.event.toggle_updated_event = new Event.ToggleUpdatedEvent();
+                                        packet.event.toggle_updated_event = new EventToggleUpdatedEvent();
                                         packet.event.toggle_updated_event.toggle = x;
                                         packet.event.toggle_updated_event.toggle.value =
                                             !packet.event.toggle_updated_event.toggle.value;
@@ -38,16 +55,45 @@ const LegacyPanel = (props: Props) => {
             </FormGroup>
             <FormGroup>
                 <div className='buttonColumn'>
-                    <FButton text='Give 20m Lunar Coins (Self)' textColor='#606060' />
-                    <FButton text='Give 20m Lunar Coins (Everyone)' textColor='#606060' />
-                    <FButton text='Spawn Shrine of the Mountain' textColor='#606060' />
-                    <FButton text='Spawn Shrine of the Mountain (50x)' textColor='#606060' />
-                    <FButton text='Spawn Teleporter' textColor='#606060' />
-                    <FButton text='Spawn Teleporter (50x)' textColor='#606060' />
-                    <FButton text='Start Teleporter Event' textColor='#606060' />
-                    <FButton text='Unlock All Achievements (Permanent)' textColor='#606060' />
-                    <FButton text='Skip Active Vote' textColor='#606060' />
-                    <FButton text='Reset Active Vote' textColor='#606060' />
+                    {props.actions.map((x) => {
+                        return (
+                            <div className='buttonFieldPair'>
+                                <FButton
+                                    text={x.name}
+                                    textColor='#606060'
+                                    onClick={() => {
+                                        const packet = new Packet();
+                                        packet.command = new Command();
+                                        packet.command.do_action_command = new CommandDoActionCommand();
+                                        packet.command.do_action_command.action = x;
+                                        props.socket!.send(packet.serializeBinary());
+                                    }}
+                                />
+                                {x.check_box && (
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                                    x.boolean = event?.target.checked;
+                                                }}
+                                            />
+                                        }
+                                        label={x.check_box_label}
+                                    />
+                                )}
+                                {x.text_box && (
+                                    <TextField
+                                        id={x.id}
+                                        label={x.text_box_label}
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                            x.string = event.target.value;
+                                            x.integer = Number(event.target.value);
+                                        }}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </FormGroup>
         </div>

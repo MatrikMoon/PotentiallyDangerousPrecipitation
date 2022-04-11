@@ -3,6 +3,6 @@
     "version": "1.0.0",
     "description": "Contains proto definitions and tools to use with potentially-dangerous-precipitation",
     "dependencies": {
-        "protoc-gen-ts": "^0.8.2"
+        "protoc-gen-ts": "^0.8.3-beta"
     }
 }

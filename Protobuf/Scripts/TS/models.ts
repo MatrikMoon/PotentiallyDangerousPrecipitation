@@ -4,861 +4,1162 @@
  * source: models.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as pb_1 from "google-protobuf";
-export namespace proto.models {
-    export class User extends pb_1.Message {
-        constructor(data?: any[] | {
-            id?: string;
-            name?: string;
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("id" in data && data.id != undefined) {
-                    this.id = data.id;
-                }
-                if ("name" in data && data.name != undefined) {
-                    this.name = data.name;
-                }
+export class User extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        id?: string;
+        name?: string;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
             }
-        }
-        get id() {
-            return pb_1.Message.getField(this, 1) as string;
-        }
-        set id(value: string) {
-            pb_1.Message.setField(this, 1, value);
-        }
-        get name() {
-            return pb_1.Message.getField(this, 2) as string;
-        }
-        set name(value: string) {
-            pb_1.Message.setField(this, 2, value);
-        }
-        static fromObject(data: {
-            id?: string;
-            name?: string;
-        }) {
-            const message = new User({});
-            if (data.id != null) {
-                message.id = data.id;
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
             }
-            if (data.name != null) {
-                message.name = data.name;
-            }
-            return message;
-        }
-        toObject() {
-            const data: {
-                id?: string;
-                name?: string;
-            } = {};
-            if (this.id != null) {
-                data.id = this.id;
-            }
-            if (this.name != null) {
-                data.name = this.name;
-            }
-            return data;
-        }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (typeof this.id === "string" && this.id.length)
-                writer.writeString(1, this.id);
-            if (typeof this.name === "string" && this.name.length)
-                writer.writeString(2, this.name);
-            if (!w)
-                return writer.getResultBuffer();
-        }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): User {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new User();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
-                    break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        message.id = reader.readString();
-                        break;
-                    case 2:
-                        message.name = reader.readString();
-                        break;
-                    default: reader.skipField();
-                }
-            }
-            return message;
-        }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): User {
-            return User.deserialize(bytes);
         }
     }
-    export class Player extends pb_1.Message {
-        constructor(data?: any[] | {
-            user?: User;
-            inventory?: Inventory;
-            effects?: StatusEffects;
-            max_health?: number;
-            current_health?: number;
-            is_dead?: boolean;
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("user" in data && data.user != undefined) {
-                    this.user = data.user;
-                }
-                if ("inventory" in data && data.inventory != undefined) {
-                    this.inventory = data.inventory;
-                }
-                if ("effects" in data && data.effects != undefined) {
-                    this.effects = data.effects;
-                }
-                if ("max_health" in data && data.max_health != undefined) {
-                    this.max_health = data.max_health;
-                }
-                if ("current_health" in data && data.current_health != undefined) {
-                    this.current_health = data.current_health;
-                }
-                if ("is_dead" in data && data.is_dead != undefined) {
-                    this.is_dead = data.is_dead;
-                }
+    get id() {
+        return pb_1.Message.getField(this, 1) as string;
+    }
+    set id(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+    get name() {
+        return pb_1.Message.getField(this, 2) as string;
+    }
+    set name(value: string) {
+        pb_1.Message.setField(this, 2, value);
+    }
+    static fromObject(data: {
+        id?: string;
+        name?: string;
+    }) {
+        const message = new User({});
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            id?: string;
+            name?: string;
+        } = {};
+        if (this.id != null) {
+            data.id = this.id;
+        }
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (typeof this.id === "string" && this.id.length)
+            writer.writeString(1, this.id);
+        if (typeof this.name === "string" && this.name.length)
+            writer.writeString(2, this.name);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): User {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new User();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.id = reader.readString();
+                    break;
+                case 2:
+                    message.name = reader.readString();
+                    break;
+                default: reader.skipField();
             }
         }
-        get user() {
-            return pb_1.Message.getWrapperField(this, User, 1) as User;
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): User {
+        return User.deserialize(bytes);
+    }
+}
+export class Player extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        user?: User;
+        inventory?: Inventory;
+        effects?: StatusEffects;
+        max_health?: number;
+        current_health?: number;
+        is_dead?: boolean;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("user" in data && data.user != undefined) {
+                this.user = data.user;
+            }
+            if ("inventory" in data && data.inventory != undefined) {
+                this.inventory = data.inventory;
+            }
+            if ("effects" in data && data.effects != undefined) {
+                this.effects = data.effects;
+            }
+            if ("max_health" in data && data.max_health != undefined) {
+                this.max_health = data.max_health;
+            }
+            if ("current_health" in data && data.current_health != undefined) {
+                this.current_health = data.current_health;
+            }
+            if ("is_dead" in data && data.is_dead != undefined) {
+                this.is_dead = data.is_dead;
+            }
         }
-        set user(value: User) {
-            pb_1.Message.setWrapperField(this, 1, value);
+    }
+    get user() {
+        return pb_1.Message.getWrapperField(this, User, 1) as User;
+    }
+    set user(value: User) {
+        pb_1.Message.setWrapperField(this, 1, value);
+    }
+    get inventory() {
+        return pb_1.Message.getWrapperField(this, Inventory, 2) as Inventory;
+    }
+    set inventory(value: Inventory) {
+        pb_1.Message.setWrapperField(this, 2, value);
+    }
+    get effects() {
+        return pb_1.Message.getWrapperField(this, StatusEffects, 3) as StatusEffects;
+    }
+    set effects(value: StatusEffects) {
+        pb_1.Message.setWrapperField(this, 3, value);
+    }
+    get max_health() {
+        return pb_1.Message.getField(this, 4) as number;
+    }
+    set max_health(value: number) {
+        pb_1.Message.setField(this, 4, value);
+    }
+    get current_health() {
+        return pb_1.Message.getField(this, 5) as number;
+    }
+    set current_health(value: number) {
+        pb_1.Message.setField(this, 5, value);
+    }
+    get is_dead() {
+        return pb_1.Message.getField(this, 6) as boolean;
+    }
+    set is_dead(value: boolean) {
+        pb_1.Message.setField(this, 6, value);
+    }
+    static fromObject(data: {
+        user?: ReturnType<typeof User.prototype.toObject>;
+        inventory?: ReturnType<typeof Inventory.prototype.toObject>;
+        effects?: ReturnType<typeof StatusEffects.prototype.toObject>;
+        max_health?: number;
+        current_health?: number;
+        is_dead?: boolean;
+    }) {
+        const message = new Player({});
+        if (data.user != null) {
+            message.user = User.fromObject(data.user);
         }
-        get inventory() {
-            return pb_1.Message.getWrapperField(this, Inventory, 2) as Inventory;
+        if (data.inventory != null) {
+            message.inventory = Inventory.fromObject(data.inventory);
         }
-        set inventory(value: Inventory) {
-            pb_1.Message.setWrapperField(this, 2, value);
+        if (data.effects != null) {
+            message.effects = StatusEffects.fromObject(data.effects);
         }
-        get effects() {
-            return pb_1.Message.getWrapperField(this, StatusEffects, 3) as StatusEffects;
+        if (data.max_health != null) {
+            message.max_health = data.max_health;
         }
-        set effects(value: StatusEffects) {
-            pb_1.Message.setWrapperField(this, 3, value);
+        if (data.current_health != null) {
+            message.current_health = data.current_health;
         }
-        get max_health() {
-            return pb_1.Message.getField(this, 4) as number;
+        if (data.is_dead != null) {
+            message.is_dead = data.is_dead;
         }
-        set max_health(value: number) {
-            pb_1.Message.setField(this, 4, value);
-        }
-        get current_health() {
-            return pb_1.Message.getField(this, 5) as number;
-        }
-        set current_health(value: number) {
-            pb_1.Message.setField(this, 5, value);
-        }
-        get is_dead() {
-            return pb_1.Message.getField(this, 6) as boolean;
-        }
-        set is_dead(value: boolean) {
-            pb_1.Message.setField(this, 6, value);
-        }
-        static fromObject(data: {
+        return message;
+    }
+    toObject() {
+        const data: {
             user?: ReturnType<typeof User.prototype.toObject>;
             inventory?: ReturnType<typeof Inventory.prototype.toObject>;
             effects?: ReturnType<typeof StatusEffects.prototype.toObject>;
             max_health?: number;
             current_health?: number;
             is_dead?: boolean;
-        }) {
-            const message = new Player({});
-            if (data.user != null) {
-                message.user = User.fromObject(data.user);
-            }
-            if (data.inventory != null) {
-                message.inventory = Inventory.fromObject(data.inventory);
-            }
-            if (data.effects != null) {
-                message.effects = StatusEffects.fromObject(data.effects);
-            }
-            if (data.max_health != null) {
-                message.max_health = data.max_health;
-            }
-            if (data.current_health != null) {
-                message.current_health = data.current_health;
-            }
-            if (data.is_dead != null) {
-                message.is_dead = data.is_dead;
-            }
-            return message;
+        } = {};
+        if (this.user != null) {
+            data.user = this.user.toObject();
         }
-        toObject() {
-            const data: {
-                user?: ReturnType<typeof User.prototype.toObject>;
-                inventory?: ReturnType<typeof Inventory.prototype.toObject>;
-                effects?: ReturnType<typeof StatusEffects.prototype.toObject>;
-                max_health?: number;
-                current_health?: number;
-                is_dead?: boolean;
-            } = {};
-            if (this.user != null) {
-                data.user = this.user.toObject();
-            }
-            if (this.inventory != null) {
-                data.inventory = this.inventory.toObject();
-            }
-            if (this.effects != null) {
-                data.effects = this.effects.toObject();
-            }
-            if (this.max_health != null) {
-                data.max_health = this.max_health;
-            }
-            if (this.current_health != null) {
-                data.current_health = this.current_health;
-            }
-            if (this.is_dead != null) {
-                data.is_dead = this.is_dead;
-            }
-            return data;
+        if (this.inventory != null) {
+            data.inventory = this.inventory.toObject();
         }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (this.user !== undefined)
-                writer.writeMessage(1, this.user, () => this.user.serialize(writer));
-            if (this.inventory !== undefined)
-                writer.writeMessage(2, this.inventory, () => this.inventory.serialize(writer));
-            if (this.effects !== undefined)
-                writer.writeMessage(3, this.effects, () => this.effects.serialize(writer));
-            if (this.max_health !== undefined)
-                writer.writeInt32(4, this.max_health);
-            if (this.current_health !== undefined)
-                writer.writeInt32(5, this.current_health);
-            if (this.is_dead !== undefined)
-                writer.writeBool(6, this.is_dead);
-            if (!w)
-                return writer.getResultBuffer();
+        if (this.effects != null) {
+            data.effects = this.effects.toObject();
         }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Player {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Player();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        if (this.max_health != null) {
+            data.max_health = this.max_health;
+        }
+        if (this.current_health != null) {
+            data.current_health = this.current_health;
+        }
+        if (this.is_dead != null) {
+            data.is_dead = this.is_dead;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.user !== undefined)
+            writer.writeMessage(1, this.user, () => this.user.serialize(writer));
+        if (this.inventory !== undefined)
+            writer.writeMessage(2, this.inventory, () => this.inventory.serialize(writer));
+        if (this.effects !== undefined)
+            writer.writeMessage(3, this.effects, () => this.effects.serialize(writer));
+        if (this.max_health !== undefined)
+            writer.writeInt32(4, this.max_health);
+        if (this.current_health !== undefined)
+            writer.writeInt32(5, this.current_health);
+        if (this.is_dead !== undefined)
+            writer.writeBool(6, this.is_dead);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Player {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Player();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.user, () => message.user = User.deserialize(reader));
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        reader.readMessage(message.user, () => message.user = User.deserialize(reader));
-                        break;
-                    case 2:
-                        reader.readMessage(message.inventory, () => message.inventory = Inventory.deserialize(reader));
-                        break;
-                    case 3:
-                        reader.readMessage(message.effects, () => message.effects = StatusEffects.deserialize(reader));
-                        break;
-                    case 4:
-                        message.max_health = reader.readInt32();
-                        break;
-                    case 5:
-                        message.current_health = reader.readInt32();
-                        break;
-                    case 6:
-                        message.is_dead = reader.readBool();
-                        break;
-                    default: reader.skipField();
-                }
+                case 2:
+                    reader.readMessage(message.inventory, () => message.inventory = Inventory.deserialize(reader));
+                    break;
+                case 3:
+                    reader.readMessage(message.effects, () => message.effects = StatusEffects.deserialize(reader));
+                    break;
+                case 4:
+                    message.max_health = reader.readInt32();
+                    break;
+                case 5:
+                    message.current_health = reader.readInt32();
+                    break;
+                case 6:
+                    message.is_dead = reader.readBool();
+                    break;
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): Player {
-            return Player.deserialize(bytes);
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): Player {
+        return Player.deserialize(bytes);
+    }
+}
+export class ItemStack extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        type?: string;
+        count?: number;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("type" in data && data.type != undefined) {
+                this.type = data.type;
+            }
+            if ("count" in data && data.count != undefined) {
+                this.count = data.count;
+            }
         }
     }
-    export class ItemStack extends pb_1.Message {
-        constructor(data?: any[] | {
+    get type() {
+        return pb_1.Message.getField(this, 1) as string;
+    }
+    set type(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+    get count() {
+        return pb_1.Message.getField(this, 2) as number;
+    }
+    set count(value: number) {
+        pb_1.Message.setField(this, 2, value);
+    }
+    static fromObject(data: {
+        type?: string;
+        count?: number;
+    }) {
+        const message = new ItemStack({});
+        if (data.type != null) {
+            message.type = data.type;
+        }
+        if (data.count != null) {
+            message.count = data.count;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
             type?: string;
             count?: number;
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("type" in data && data.type != undefined) {
-                    this.type = data.type;
-                }
-                if ("count" in data && data.count != undefined) {
-                    this.count = data.count;
-                }
-            }
+        } = {};
+        if (this.type != null) {
+            data.type = this.type;
         }
-        get type() {
-            return pb_1.Message.getField(this, 1) as string;
+        if (this.count != null) {
+            data.count = this.count;
         }
-        set type(value: string) {
-            pb_1.Message.setField(this, 1, value);
-        }
-        get count() {
-            return pb_1.Message.getField(this, 2) as number;
-        }
-        set count(value: number) {
-            pb_1.Message.setField(this, 2, value);
-        }
-        static fromObject(data: {
-            type?: string;
-            count?: number;
-        }) {
-            const message = new ItemStack({});
-            if (data.type != null) {
-                message.type = data.type;
-            }
-            if (data.count != null) {
-                message.count = data.count;
-            }
-            return message;
-        }
-        toObject() {
-            const data: {
-                type?: string;
-                count?: number;
-            } = {};
-            if (this.type != null) {
-                data.type = this.type;
-            }
-            if (this.count != null) {
-                data.count = this.count;
-            }
-            return data;
-        }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (typeof this.type === "string" && this.type.length)
-                writer.writeString(1, this.type);
-            if (this.count !== undefined)
-                writer.writeInt32(2, this.count);
-            if (!w)
-                return writer.getResultBuffer();
-        }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ItemStack {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ItemStack();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (typeof this.type === "string" && this.type.length)
+            writer.writeString(1, this.type);
+        if (this.count !== undefined)
+            writer.writeInt32(2, this.count);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ItemStack {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ItemStack();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.type = reader.readString();
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        message.type = reader.readString();
-                        break;
-                    case 2:
-                        message.count = reader.readInt32();
-                        break;
-                    default: reader.skipField();
-                }
+                case 2:
+                    message.count = reader.readInt32();
+                    break;
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): ItemStack {
-            return ItemStack.deserialize(bytes);
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ItemStack {
+        return ItemStack.deserialize(bytes);
+    }
+}
+export class Inventory extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        stacks?: ItemStack[];
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("stacks" in data && data.stacks != undefined) {
+                this.stacks = data.stacks;
+            }
         }
     }
-    export class Inventory extends pb_1.Message {
-        constructor(data?: any[] | {
-            stacks?: ItemStack[];
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("stacks" in data && data.stacks != undefined) {
-                    this.stacks = data.stacks;
-                }
-            }
+    get stacks() {
+        return pb_1.Message.getRepeatedWrapperField(this, ItemStack, 1) as ItemStack[];
+    }
+    set stacks(value: ItemStack[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 1, value);
+    }
+    static fromObject(data: {
+        stacks?: ReturnType<typeof ItemStack.prototype.toObject>[];
+    }) {
+        const message = new Inventory({});
+        if (data.stacks != null) {
+            message.stacks = data.stacks.map(item => ItemStack.fromObject(item));
         }
-        get stacks() {
-            return pb_1.Message.getRepeatedWrapperField(this, ItemStack, 1) as ItemStack[];
-        }
-        set stacks(value: ItemStack[]) {
-            pb_1.Message.setRepeatedWrapperField(this, 1, value);
-        }
-        static fromObject(data: {
+        return message;
+    }
+    toObject() {
+        const data: {
             stacks?: ReturnType<typeof ItemStack.prototype.toObject>[];
-        }) {
-            const message = new Inventory({});
-            if (data.stacks != null) {
-                message.stacks = data.stacks.map(item => ItemStack.fromObject(item));
-            }
-            return message;
+        } = {};
+        if (this.stacks != null) {
+            data.stacks = this.stacks.map((item: ItemStack) => item.toObject());
         }
-        toObject() {
-            const data: {
-                stacks?: ReturnType<typeof ItemStack.prototype.toObject>[];
-            } = {};
-            if (this.stacks != null) {
-                data.stacks = this.stacks.map((item: ItemStack) => item.toObject());
-            }
-            return data;
-        }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (this.stacks !== undefined)
-                writer.writeRepeatedMessage(1, this.stacks, (item: ItemStack) => item.serialize(writer));
-            if (!w)
-                return writer.getResultBuffer();
-        }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Inventory {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Inventory();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.stacks !== undefined)
+            writer.writeRepeatedMessage(1, this.stacks, (item: ItemStack) => item.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Inventory {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Inventory();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.stacks, () => pb_1.Message.addToRepeatedWrapperField(message, 1, ItemStack.deserialize(reader), ItemStack));
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        reader.readMessage(message.stacks, () => pb_1.Message.addToRepeatedWrapperField(message, 1, ItemStack.deserialize(reader), ItemStack));
-                        break;
-                    default: reader.skipField();
-                }
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): Inventory {
-            return Inventory.deserialize(bytes);
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): Inventory {
+        return Inventory.deserialize(bytes);
+    }
+}
+export class StatusEffectStack extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        type?: string;
+        count?: number;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("type" in data && data.type != undefined) {
+                this.type = data.type;
+            }
+            if ("count" in data && data.count != undefined) {
+                this.count = data.count;
+            }
         }
     }
-    export class StatusEffectStack extends pb_1.Message {
-        constructor(data?: any[] | {
+    get type() {
+        return pb_1.Message.getField(this, 1) as string;
+    }
+    set type(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+    get count() {
+        return pb_1.Message.getField(this, 2) as number;
+    }
+    set count(value: number) {
+        pb_1.Message.setField(this, 2, value);
+    }
+    static fromObject(data: {
+        type?: string;
+        count?: number;
+    }) {
+        const message = new StatusEffectStack({});
+        if (data.type != null) {
+            message.type = data.type;
+        }
+        if (data.count != null) {
+            message.count = data.count;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
             type?: string;
             count?: number;
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("type" in data && data.type != undefined) {
-                    this.type = data.type;
-                }
-                if ("count" in data && data.count != undefined) {
-                    this.count = data.count;
-                }
-            }
+        } = {};
+        if (this.type != null) {
+            data.type = this.type;
         }
-        get type() {
-            return pb_1.Message.getField(this, 1) as string;
+        if (this.count != null) {
+            data.count = this.count;
         }
-        set type(value: string) {
-            pb_1.Message.setField(this, 1, value);
-        }
-        get count() {
-            return pb_1.Message.getField(this, 2) as number;
-        }
-        set count(value: number) {
-            pb_1.Message.setField(this, 2, value);
-        }
-        static fromObject(data: {
-            type?: string;
-            count?: number;
-        }) {
-            const message = new StatusEffectStack({});
-            if (data.type != null) {
-                message.type = data.type;
-            }
-            if (data.count != null) {
-                message.count = data.count;
-            }
-            return message;
-        }
-        toObject() {
-            const data: {
-                type?: string;
-                count?: number;
-            } = {};
-            if (this.type != null) {
-                data.type = this.type;
-            }
-            if (this.count != null) {
-                data.count = this.count;
-            }
-            return data;
-        }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (typeof this.type === "string" && this.type.length)
-                writer.writeString(1, this.type);
-            if (this.count !== undefined)
-                writer.writeInt32(2, this.count);
-            if (!w)
-                return writer.getResultBuffer();
-        }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): StatusEffectStack {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new StatusEffectStack();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (typeof this.type === "string" && this.type.length)
+            writer.writeString(1, this.type);
+        if (this.count !== undefined)
+            writer.writeInt32(2, this.count);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): StatusEffectStack {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new StatusEffectStack();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.type = reader.readString();
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        message.type = reader.readString();
-                        break;
-                    case 2:
-                        message.count = reader.readInt32();
-                        break;
-                    default: reader.skipField();
-                }
+                case 2:
+                    message.count = reader.readInt32();
+                    break;
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): StatusEffectStack {
-            return StatusEffectStack.deserialize(bytes);
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): StatusEffectStack {
+        return StatusEffectStack.deserialize(bytes);
+    }
+}
+export class StatusEffects extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        effects?: StatusEffectStack[];
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("effects" in data && data.effects != undefined) {
+                this.effects = data.effects;
+            }
         }
     }
-    export class StatusEffects extends pb_1.Message {
-        constructor(data?: any[] | {
-            effects?: StatusEffectStack[];
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("effects" in data && data.effects != undefined) {
-                    this.effects = data.effects;
-                }
-            }
+    get effects() {
+        return pb_1.Message.getRepeatedWrapperField(this, StatusEffectStack, 1) as StatusEffectStack[];
+    }
+    set effects(value: StatusEffectStack[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 1, value);
+    }
+    static fromObject(data: {
+        effects?: ReturnType<typeof StatusEffectStack.prototype.toObject>[];
+    }) {
+        const message = new StatusEffects({});
+        if (data.effects != null) {
+            message.effects = data.effects.map(item => StatusEffectStack.fromObject(item));
         }
-        get effects() {
-            return pb_1.Message.getRepeatedWrapperField(this, StatusEffectStack, 1) as StatusEffectStack[];
-        }
-        set effects(value: StatusEffectStack[]) {
-            pb_1.Message.setRepeatedWrapperField(this, 1, value);
-        }
-        static fromObject(data: {
+        return message;
+    }
+    toObject() {
+        const data: {
             effects?: ReturnType<typeof StatusEffectStack.prototype.toObject>[];
-        }) {
-            const message = new StatusEffects({});
-            if (data.effects != null) {
-                message.effects = data.effects.map(item => StatusEffectStack.fromObject(item));
-            }
-            return message;
+        } = {};
+        if (this.effects != null) {
+            data.effects = this.effects.map((item: StatusEffectStack) => item.toObject());
         }
-        toObject() {
-            const data: {
-                effects?: ReturnType<typeof StatusEffectStack.prototype.toObject>[];
-            } = {};
-            if (this.effects != null) {
-                data.effects = this.effects.map((item: StatusEffectStack) => item.toObject());
-            }
-            return data;
-        }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (this.effects !== undefined)
-                writer.writeRepeatedMessage(1, this.effects, (item: StatusEffectStack) => item.serialize(writer));
-            if (!w)
-                return writer.getResultBuffer();
-        }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): StatusEffects {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new StatusEffects();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.effects !== undefined)
+            writer.writeRepeatedMessage(1, this.effects, (item: StatusEffectStack) => item.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): StatusEffects {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new StatusEffects();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.effects, () => pb_1.Message.addToRepeatedWrapperField(message, 1, StatusEffectStack.deserialize(reader), StatusEffectStack));
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        reader.readMessage(message.effects, () => pb_1.Message.addToRepeatedWrapperField(message, 1, StatusEffectStack.deserialize(reader), StatusEffectStack));
-                        break;
-                    default: reader.skipField();
-                }
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): StatusEffects {
-            return StatusEffects.deserialize(bytes);
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): StatusEffects {
+        return StatusEffects.deserialize(bytes);
+    }
+}
+export class Toggle extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        id?: string;
+        name?: string;
+        value?: boolean;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
+            }
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
+            }
+            if ("value" in data && data.value != undefined) {
+                this.value = data.value;
+            }
         }
     }
-    export class Toggle extends pb_1.Message {
-        constructor(data?: any[] | {
+    get id() {
+        return pb_1.Message.getField(this, 1) as string;
+    }
+    set id(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+    get name() {
+        return pb_1.Message.getField(this, 2) as string;
+    }
+    set name(value: string) {
+        pb_1.Message.setField(this, 2, value);
+    }
+    get value() {
+        return pb_1.Message.getField(this, 3) as boolean;
+    }
+    set value(value: boolean) {
+        pb_1.Message.setField(this, 3, value);
+    }
+    static fromObject(data: {
+        id?: string;
+        name?: string;
+        value?: boolean;
+    }) {
+        const message = new Toggle({});
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        if (data.value != null) {
+            message.value = data.value;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
             id?: string;
             name?: string;
             value?: boolean;
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("id" in data && data.id != undefined) {
-                    this.id = data.id;
-                }
-                if ("name" in data && data.name != undefined) {
-                    this.name = data.name;
-                }
-                if ("value" in data && data.value != undefined) {
-                    this.value = data.value;
-                }
-            }
+        } = {};
+        if (this.id != null) {
+            data.id = this.id;
         }
-        get id() {
-            return pb_1.Message.getField(this, 1) as string;
+        if (this.name != null) {
+            data.name = this.name;
         }
-        set id(value: string) {
-            pb_1.Message.setField(this, 1, value);
+        if (this.value != null) {
+            data.value = this.value;
         }
-        get name() {
-            return pb_1.Message.getField(this, 2) as string;
-        }
-        set name(value: string) {
-            pb_1.Message.setField(this, 2, value);
-        }
-        get value() {
-            return pb_1.Message.getField(this, 3) as boolean;
-        }
-        set value(value: boolean) {
-            pb_1.Message.setField(this, 3, value);
-        }
-        static fromObject(data: {
-            id?: string;
-            name?: string;
-            value?: boolean;
-        }) {
-            const message = new Toggle({});
-            if (data.id != null) {
-                message.id = data.id;
-            }
-            if (data.name != null) {
-                message.name = data.name;
-            }
-            if (data.value != null) {
-                message.value = data.value;
-            }
-            return message;
-        }
-        toObject() {
-            const data: {
-                id?: string;
-                name?: string;
-                value?: boolean;
-            } = {};
-            if (this.id != null) {
-                data.id = this.id;
-            }
-            if (this.name != null) {
-                data.name = this.name;
-            }
-            if (this.value != null) {
-                data.value = this.value;
-            }
-            return data;
-        }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (typeof this.id === "string" && this.id.length)
-                writer.writeString(1, this.id);
-            if (typeof this.name === "string" && this.name.length)
-                writer.writeString(2, this.name);
-            if (this.value !== undefined)
-                writer.writeBool(3, this.value);
-            if (!w)
-                return writer.getResultBuffer();
-        }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Toggle {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Toggle();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (typeof this.id === "string" && this.id.length)
+            writer.writeString(1, this.id);
+        if (typeof this.name === "string" && this.name.length)
+            writer.writeString(2, this.name);
+        if (this.value !== undefined)
+            writer.writeBool(3, this.value);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Toggle {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Toggle();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.id = reader.readString();
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        message.id = reader.readString();
-                        break;
-                    case 2:
-                        message.name = reader.readString();
-                        break;
-                    case 3:
-                        message.value = reader.readBool();
-                        break;
-                    default: reader.skipField();
-                }
+                case 2:
+                    message.name = reader.readString();
+                    break;
+                case 3:
+                    message.value = reader.readBool();
+                    break;
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): Toggle {
-            return Toggle.deserialize(bytes);
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): Toggle {
+        return Toggle.deserialize(bytes);
+    }
+}
+export class Action extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        id?: string;
+        name?: string;
+        text_box?: boolean;
+        text_box_label?: string;
+        check_box?: boolean;
+        check_box_label?: string;
+        integer?: number;
+        string?: string;
+        float?: number;
+        boolean?: boolean;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
+            }
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
+            }
+            if ("text_box" in data && data.text_box != undefined) {
+                this.text_box = data.text_box;
+            }
+            if ("text_box_label" in data && data.text_box_label != undefined) {
+                this.text_box_label = data.text_box_label;
+            }
+            if ("check_box" in data && data.check_box != undefined) {
+                this.check_box = data.check_box;
+            }
+            if ("check_box_label" in data && data.check_box_label != undefined) {
+                this.check_box_label = data.check_box_label;
+            }
+            if ("integer" in data && data.integer != undefined) {
+                this.integer = data.integer;
+            }
+            if ("string" in data && data.string != undefined) {
+                this.string = data.string;
+            }
+            if ("float" in data && data.float != undefined) {
+                this.float = data.float;
+            }
+            if ("boolean" in data && data.boolean != undefined) {
+                this.boolean = data.boolean;
+            }
         }
     }
-    export class State extends pb_1.Message {
-        constructor(data?: any[] | {
-            toggles?: Toggle[];
-            game_state?: State.GameStates;
-            players?: Player[];
-            current_map?: string;
-            current_stage_number?: number;
-        }) {
-            super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 3], []);
-            if (!Array.isArray(data) && typeof data == "object") {
-                if ("toggles" in data && data.toggles != undefined) {
-                    this.toggles = data.toggles;
-                }
-                if ("game_state" in data && data.game_state != undefined) {
-                    this.game_state = data.game_state;
-                }
-                if ("players" in data && data.players != undefined) {
-                    this.players = data.players;
-                }
-                if ("current_map" in data && data.current_map != undefined) {
-                    this.current_map = data.current_map;
-                }
-                if ("current_stage_number" in data && data.current_stage_number != undefined) {
-                    this.current_stage_number = data.current_stage_number;
-                }
+    get id() {
+        return pb_1.Message.getField(this, 1) as string;
+    }
+    set id(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+    get name() {
+        return pb_1.Message.getField(this, 2) as string;
+    }
+    set name(value: string) {
+        pb_1.Message.setField(this, 2, value);
+    }
+    get text_box() {
+        return pb_1.Message.getField(this, 3) as boolean;
+    }
+    set text_box(value: boolean) {
+        pb_1.Message.setField(this, 3, value);
+    }
+    get text_box_label() {
+        return pb_1.Message.getField(this, 4) as string;
+    }
+    set text_box_label(value: string) {
+        pb_1.Message.setField(this, 4, value);
+    }
+    get check_box() {
+        return pb_1.Message.getField(this, 5) as boolean;
+    }
+    set check_box(value: boolean) {
+        pb_1.Message.setField(this, 5, value);
+    }
+    get check_box_label() {
+        return pb_1.Message.getField(this, 6) as string;
+    }
+    set check_box_label(value: string) {
+        pb_1.Message.setField(this, 6, value);
+    }
+    get integer() {
+        return pb_1.Message.getField(this, 7) as number;
+    }
+    set integer(value: number) {
+        pb_1.Message.setField(this, 7, value);
+    }
+    get string() {
+        return pb_1.Message.getField(this, 8) as string;
+    }
+    set string(value: string) {
+        pb_1.Message.setField(this, 8, value);
+    }
+    get float() {
+        return pb_1.Message.getField(this, 9) as number;
+    }
+    set float(value: number) {
+        pb_1.Message.setField(this, 9, value);
+    }
+    get boolean() {
+        return pb_1.Message.getField(this, 10) as boolean;
+    }
+    set boolean(value: boolean) {
+        pb_1.Message.setField(this, 10, value);
+    }
+    static fromObject(data: {
+        id?: string;
+        name?: string;
+        text_box?: boolean;
+        text_box_label?: string;
+        check_box?: boolean;
+        check_box_label?: string;
+        integer?: number;
+        string?: string;
+        float?: number;
+        boolean?: boolean;
+    }) {
+        const message = new Action({});
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        if (data.text_box != null) {
+            message.text_box = data.text_box;
+        }
+        if (data.text_box_label != null) {
+            message.text_box_label = data.text_box_label;
+        }
+        if (data.check_box != null) {
+            message.check_box = data.check_box;
+        }
+        if (data.check_box_label != null) {
+            message.check_box_label = data.check_box_label;
+        }
+        if (data.integer != null) {
+            message.integer = data.integer;
+        }
+        if (data.string != null) {
+            message.string = data.string;
+        }
+        if (data.float != null) {
+            message.float = data.float;
+        }
+        if (data.boolean != null) {
+            message.boolean = data.boolean;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            id?: string;
+            name?: string;
+            text_box?: boolean;
+            text_box_label?: string;
+            check_box?: boolean;
+            check_box_label?: string;
+            integer?: number;
+            string?: string;
+            float?: number;
+            boolean?: boolean;
+        } = {};
+        if (this.id != null) {
+            data.id = this.id;
+        }
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        if (this.text_box != null) {
+            data.text_box = this.text_box;
+        }
+        if (this.text_box_label != null) {
+            data.text_box_label = this.text_box_label;
+        }
+        if (this.check_box != null) {
+            data.check_box = this.check_box;
+        }
+        if (this.check_box_label != null) {
+            data.check_box_label = this.check_box_label;
+        }
+        if (this.integer != null) {
+            data.integer = this.integer;
+        }
+        if (this.string != null) {
+            data.string = this.string;
+        }
+        if (this.float != null) {
+            data.float = this.float;
+        }
+        if (this.boolean != null) {
+            data.boolean = this.boolean;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (typeof this.id === "string" && this.id.length)
+            writer.writeString(1, this.id);
+        if (typeof this.name === "string" && this.name.length)
+            writer.writeString(2, this.name);
+        if (this.text_box !== undefined)
+            writer.writeBool(3, this.text_box);
+        if (typeof this.text_box_label === "string" && this.text_box_label.length)
+            writer.writeString(4, this.text_box_label);
+        if (this.check_box !== undefined)
+            writer.writeBool(5, this.check_box);
+        if (typeof this.check_box_label === "string" && this.check_box_label.length)
+            writer.writeString(6, this.check_box_label);
+        if (this.integer !== undefined)
+            writer.writeInt32(7, this.integer);
+        if (typeof this.string === "string" && this.string.length)
+            writer.writeString(8, this.string);
+        if (this.float !== undefined)
+            writer.writeFloat(9, this.float);
+        if (this.boolean !== undefined)
+            writer.writeBool(10, this.boolean);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Action {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Action();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.id = reader.readString();
+                    break;
+                case 2:
+                    message.name = reader.readString();
+                    break;
+                case 3:
+                    message.text_box = reader.readBool();
+                    break;
+                case 4:
+                    message.text_box_label = reader.readString();
+                    break;
+                case 5:
+                    message.check_box = reader.readBool();
+                    break;
+                case 6:
+                    message.check_box_label = reader.readString();
+                    break;
+                case 7:
+                    message.integer = reader.readInt32();
+                    break;
+                case 8:
+                    message.string = reader.readString();
+                    break;
+                case 9:
+                    message.float = reader.readFloat();
+                    break;
+                case 10:
+                    message.boolean = reader.readBool();
+                    break;
+                default: reader.skipField();
             }
         }
-        get toggles() {
-            return pb_1.Message.getRepeatedWrapperField(this, Toggle, 1) as Toggle[];
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): Action {
+        return Action.deserialize(bytes);
+    }
+}
+export class State extends pb_1.Message {
+    #one_of_decls = [];
+    constructor(data?: any[] | {
+        toggles?: Toggle[];
+        actions?: Action[];
+        game_state?: StateGameStates;
+        players?: Player[];
+        current_map?: string;
+        current_stage_number?: number;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 2, 4], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("toggles" in data && data.toggles != undefined) {
+                this.toggles = data.toggles;
+            }
+            if ("actions" in data && data.actions != undefined) {
+                this.actions = data.actions;
+            }
+            if ("game_state" in data && data.game_state != undefined) {
+                this.game_state = data.game_state;
+            }
+            if ("players" in data && data.players != undefined) {
+                this.players = data.players;
+            }
+            if ("current_map" in data && data.current_map != undefined) {
+                this.current_map = data.current_map;
+            }
+            if ("current_stage_number" in data && data.current_stage_number != undefined) {
+                this.current_stage_number = data.current_stage_number;
+            }
         }
-        set toggles(value: Toggle[]) {
-            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+    }
+    get toggles() {
+        return pb_1.Message.getRepeatedWrapperField(this, Toggle, 1) as Toggle[];
+    }
+    set toggles(value: Toggle[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 1, value);
+    }
+    get actions() {
+        return pb_1.Message.getRepeatedWrapperField(this, Action, 2) as Action[];
+    }
+    set actions(value: Action[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 2, value);
+    }
+    get game_state() {
+        return pb_1.Message.getField(this, 3) as StateGameStates;
+    }
+    set game_state(value: StateGameStates) {
+        pb_1.Message.setField(this, 3, value);
+    }
+    get players() {
+        return pb_1.Message.getRepeatedWrapperField(this, Player, 4) as Player[];
+    }
+    set players(value: Player[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 4, value);
+    }
+    get current_map() {
+        return pb_1.Message.getField(this, 5) as string;
+    }
+    set current_map(value: string) {
+        pb_1.Message.setField(this, 5, value);
+    }
+    get current_stage_number() {
+        return pb_1.Message.getField(this, 6) as number;
+    }
+    set current_stage_number(value: number) {
+        pb_1.Message.setField(this, 6, value);
+    }
+    static fromObject(data: {
+        toggles?: ReturnType<typeof Toggle.prototype.toObject>[];
+        actions?: ReturnType<typeof Action.prototype.toObject>[];
+        game_state?: StateGameStates;
+        players?: ReturnType<typeof Player.prototype.toObject>[];
+        current_map?: string;
+        current_stage_number?: number;
+    }) {
+        const message = new State({});
+        if (data.toggles != null) {
+            message.toggles = data.toggles.map(item => Toggle.fromObject(item));
         }
-        get game_state() {
-            return pb_1.Message.getField(this, 2) as State.GameStates;
+        if (data.actions != null) {
+            message.actions = data.actions.map(item => Action.fromObject(item));
         }
-        set game_state(value: State.GameStates) {
-            pb_1.Message.setField(this, 2, value);
+        if (data.game_state != null) {
+            message.game_state = data.game_state;
         }
-        get players() {
-            return pb_1.Message.getRepeatedWrapperField(this, Player, 3) as Player[];
+        if (data.players != null) {
+            message.players = data.players.map(item => Player.fromObject(item));
         }
-        set players(value: Player[]) {
-            pb_1.Message.setRepeatedWrapperField(this, 3, value);
+        if (data.current_map != null) {
+            message.current_map = data.current_map;
         }
-        get current_map() {
-            return pb_1.Message.getField(this, 4) as string;
+        if (data.current_stage_number != null) {
+            message.current_stage_number = data.current_stage_number;
         }
-        set current_map(value: string) {
-            pb_1.Message.setField(this, 4, value);
-        }
-        get current_stage_number() {
-            return pb_1.Message.getField(this, 5) as number;
-        }
-        set current_stage_number(value: number) {
-            pb_1.Message.setField(this, 5, value);
-        }
-        static fromObject(data: {
+        return message;
+    }
+    toObject() {
+        const data: {
             toggles?: ReturnType<typeof Toggle.prototype.toObject>[];
-            game_state?: State.GameStates;
+            actions?: ReturnType<typeof Action.prototype.toObject>[];
+            game_state?: StateGameStates;
             players?: ReturnType<typeof Player.prototype.toObject>[];
             current_map?: string;
             current_stage_number?: number;
-        }) {
-            const message = new State({});
-            if (data.toggles != null) {
-                message.toggles = data.toggles.map(item => Toggle.fromObject(item));
-            }
-            if (data.game_state != null) {
-                message.game_state = data.game_state;
-            }
-            if (data.players != null) {
-                message.players = data.players.map(item => Player.fromObject(item));
-            }
-            if (data.current_map != null) {
-                message.current_map = data.current_map;
-            }
-            if (data.current_stage_number != null) {
-                message.current_stage_number = data.current_stage_number;
-            }
-            return message;
+        } = {};
+        if (this.toggles != null) {
+            data.toggles = this.toggles.map((item: Toggle) => item.toObject());
         }
-        toObject() {
-            const data: {
-                toggles?: ReturnType<typeof Toggle.prototype.toObject>[];
-                game_state?: State.GameStates;
-                players?: ReturnType<typeof Player.prototype.toObject>[];
-                current_map?: string;
-                current_stage_number?: number;
-            } = {};
-            if (this.toggles != null) {
-                data.toggles = this.toggles.map((item: Toggle) => item.toObject());
-            }
-            if (this.game_state != null) {
-                data.game_state = this.game_state;
-            }
-            if (this.players != null) {
-                data.players = this.players.map((item: Player) => item.toObject());
-            }
-            if (this.current_map != null) {
-                data.current_map = this.current_map;
-            }
-            if (this.current_stage_number != null) {
-                data.current_stage_number = this.current_stage_number;
-            }
-            return data;
+        if (this.actions != null) {
+            data.actions = this.actions.map((item: Action) => item.toObject());
         }
-        serialize(): Uint8Array;
-        serialize(w: pb_1.BinaryWriter): void;
-        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-            const writer = w || new pb_1.BinaryWriter();
-            if (this.toggles !== undefined)
-                writer.writeRepeatedMessage(1, this.toggles, (item: Toggle) => item.serialize(writer));
-            if (this.game_state !== undefined)
-                writer.writeEnum(2, this.game_state);
-            if (this.players !== undefined)
-                writer.writeRepeatedMessage(3, this.players, (item: Player) => item.serialize(writer));
-            if (typeof this.current_map === "string" && this.current_map.length)
-                writer.writeString(4, this.current_map);
-            if (this.current_stage_number !== undefined)
-                writer.writeInt32(5, this.current_stage_number);
-            if (!w)
-                return writer.getResultBuffer();
+        if (this.game_state != null) {
+            data.game_state = this.game_state;
         }
-        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): State {
-            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new State();
-            while (reader.nextField()) {
-                if (reader.isEndGroup())
+        if (this.players != null) {
+            data.players = this.players.map((item: Player) => item.toObject());
+        }
+        if (this.current_map != null) {
+            data.current_map = this.current_map;
+        }
+        if (this.current_stage_number != null) {
+            data.current_stage_number = this.current_stage_number;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.toggles !== undefined)
+            writer.writeRepeatedMessage(1, this.toggles, (item: Toggle) => item.serialize(writer));
+        if (this.actions !== undefined)
+            writer.writeRepeatedMessage(2, this.actions, (item: Action) => item.serialize(writer));
+        if (this.game_state !== undefined)
+            writer.writeEnum(3, this.game_state);
+        if (this.players !== undefined)
+            writer.writeRepeatedMessage(4, this.players, (item: Player) => item.serialize(writer));
+        if (typeof this.current_map === "string" && this.current_map.length)
+            writer.writeString(5, this.current_map);
+        if (this.current_stage_number !== undefined)
+            writer.writeInt32(6, this.current_stage_number);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): State {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new State();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.toggles, () => pb_1.Message.addToRepeatedWrapperField(message, 1, Toggle.deserialize(reader), Toggle));
                     break;
-                switch (reader.getFieldNumber()) {
-                    case 1:
-                        reader.readMessage(message.toggles, () => pb_1.Message.addToRepeatedWrapperField(message, 1, Toggle.deserialize(reader), Toggle));
-                        break;
-                    case 2:
-                        message.game_state = reader.readEnum();
-                        break;
-                    case 3:
-                        reader.readMessage(message.players, () => pb_1.Message.addToRepeatedWrapperField(message, 3, Player.deserialize(reader), Player));
-                        break;
-                    case 4:
-                        message.current_map = reader.readString();
-                        break;
-                    case 5:
-                        message.current_stage_number = reader.readInt32();
-                        break;
-                    default: reader.skipField();
-                }
+                case 2:
+                    reader.readMessage(message.actions, () => pb_1.Message.addToRepeatedWrapperField(message, 2, Action.deserialize(reader), Action));
+                    break;
+                case 3:
+                    message.game_state = reader.readEnum();
+                    break;
+                case 4:
+                    reader.readMessage(message.players, () => pb_1.Message.addToRepeatedWrapperField(message, 4, Player.deserialize(reader), Player));
+                    break;
+                case 5:
+                    message.current_map = reader.readString();
+                    break;
+                case 6:
+                    message.current_stage_number = reader.readInt32();
+                    break;
+                default: reader.skipField();
             }
-            return message;
         }
-        serializeBinary(): Uint8Array {
-            return this.serialize();
-        }
-        static deserializeBinary(bytes: Uint8Array): State {
-            return State.deserialize(bytes);
-        }
+        return message;
     }
-    export namespace State {
-        export enum GameStates {
-            InMenu = 0,
-            InGame = 1
-        }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
     }
+    static deserializeBinary(bytes: Uint8Array): State {
+        return State.deserialize(bytes);
+    }
+}
+export enum StateGameStates {
+    InMenu = 0,
+    InGame = 1
 }

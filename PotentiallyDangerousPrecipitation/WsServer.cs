@@ -27,7 +27,6 @@ namespace PotentiallyDangerousPrecipitation
 
         private List<ConnectedUser> clients = new List<ConnectedUser>();
         private Socket ipv4Server;
-        private Socket ipv6Server;
         private int port;
 
         static SHA1 sha1 = SHA1.Create();
@@ -49,8 +48,8 @@ namespace PotentiallyDangerousPrecipitation
 
         public async Task Start()
         {
-            IPAddress ipv4Address = IPAddress.Any;
-            IPEndPoint localIPV4EndPoint = new IPEndPoint(ipv4Address, port);
+            var ipv4Address = IPAddress.Any;
+            var localIPV4EndPoint = new IPEndPoint(ipv4Address, port);
 
             ipv4Server = new Socket(ipv4Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             ipv4Server.Bind(localIPV4EndPoint);
@@ -72,7 +71,7 @@ namespace PotentiallyDangerousPrecipitation
 
                 byte[] buffer = new byte[1024];
                 string headerResponse = string.Empty;
-                if ((ipv4Server != null && ipv4Server.IsBound) || (ipv6Server != null && ipv6Server.IsBound))
+                if (ipv4Server != null && ipv4Server.IsBound)
                 {
                     try
                     {
@@ -404,9 +403,6 @@ namespace PotentiallyDangerousPrecipitation
             Enabled = false;
             if (ipv4Server.Connected) ipv4Server.Shutdown(SocketShutdown.Both);
             ipv4Server.Close();
-
-            if (ipv6Server.Connected) ipv6Server.Shutdown(SocketShutdown.Both);
-            ipv6Server.Close();
         }
     }
 }

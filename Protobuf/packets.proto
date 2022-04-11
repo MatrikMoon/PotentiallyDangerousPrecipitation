@@ -6,43 +6,12 @@ option csharp_namespace = "Protos.Models.Packets";
 import "models.proto";
 
 message Command {
-  message GiveLunarCoinsCommand {
-    int32 amount = 1;
-    bool to_everyone = 2;
-  }
-
-  message SpawnMountainShrineCommand {
-    int32 amount = 1;
-  }
-
-  message SpawnTeleporterCommand {
-    int32 amount = 1;
-  }
-
-  message StartTeleporterEventCommand {
-
-  }
-
-  message UnlockAllAchievementsCommand {
-
-  }
-
-  message SkipActiveVoteCommand {
-
-  }
-
-  message ResetActiveVoteCommand {
-
+  message DoActionCommand {
+    models.Action action = 1;
   }
 
   oneof command {
-    GiveLunarCoinsCommand give_lunar_coins_command = 1;
-    SpawnMountainShrineCommand spawn_mountain_shrine_command = 2;
-    SpawnTeleporterCommand spawn_teleporter_command = 3;
-    StartTeleporterEventCommand start_teleporter_event_command = 4;
-    UnlockAllAchievementsCommand unlock_all_achievements_command = 5;
-    SkipActiveVoteCommand skip_active_vote_command = 6;
-    ResetActiveVoteCommand reset_active_vote_command = 7;
+    DoActionCommand do_action_command = 1;
   }
 }
 
