@@ -60,7 +60,7 @@ namespace PotentiallyDangerousPrecipitation
         
         public void DoAction(Action action)
         {
-            Actions[action.Id](action);
+            UnityMainThreadDispatcher.Instance().Enqueue(() => Actions[action.Id](action));
         }
 
         #region EVENTS/ACTIONS
