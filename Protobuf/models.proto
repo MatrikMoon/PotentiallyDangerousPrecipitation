@@ -11,7 +11,7 @@ message User {
 message Player {
   User user = 1;
 
-  //Game-related states
+  // Game-related states
   Inventory inventory = 2;
   StatusEffects effects = 3;
   int32 max_health = 4;
@@ -47,13 +47,13 @@ message Action {
   string id = 1;
   string name = 2;
   
-  //Control types
+  // Control types
   bool text_box = 3;
   string text_box_label = 4;
   bool check_box = 5;
   string check_box_label = 6;
 
-  //Extra bits, todo: refactor
+  // Extra bits, todo: refactor
   int32 integer = 7;
   string string = 8;
   float float = 9;
@@ -64,16 +64,17 @@ message State {
   enum GameStates {
     InMenu = 0;
     InGame = 1;
-    //TODO: Add specific game types?
+    // TODO: Add specific game types?
   }
 
-  //Toggle/Action States
+  // Toggle/Action States
   repeated Toggle toggles = 1;
   repeated Action actions = 2;
 
-  //GameState
+  // GameState
   GameStates game_state = 3;
   repeated Player players = 4;
   string current_map = 5;
   int32 current_stage_number = 6;
+  repeated Toggle artifacts = 7;
 }

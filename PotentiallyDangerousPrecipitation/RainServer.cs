@@ -2,13 +2,12 @@
 using PotentiallyDangerousPrecipitation.Utilities;
 using Protos.Models;
 using Protos.Models.Packets;
-using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine;
 using Action = Protos.Models.Action;
+using Player = Protos.Models.Player;
 
 namespace PotentiallyDangerousPrecipitation
 {
@@ -18,6 +17,7 @@ namespace PotentiallyDangerousPrecipitation
         public event Func<Player, Task> PlayerDisconnected;
         public event Func<Player, Task> PlayerInfoUpdated;
         public event Func<Toggle, Task> ToggleUpdated;
+        public event Func<Toggle, Task> ArtifactUpdated;
 
         private State State { get; set; }
         private Dictionary<string, Action<Action>> Actions { get; set; } = new Dictionary<string, Action<Action>>();
@@ -64,6 +64,34 @@ namespace PotentiallyDangerousPrecipitation
         }
 
         #region EVENTS/ACTIONS
+        public Task AddArtifact(string id, string name, bool enabled = false)
+        {
+            var artifact = new Toggle()
+            {
+                Id = id,
+                Name = name,
+                Value = enabled
+            };
+
+            lock (State.Artifacts)
+            {
+                State.Artifacts.Add(artifact);
+            }
+
+            var @event = new Event
+            {
+                artifact_added_event = new Event.ArtifactAddedEvent
+                {
+                    Artifact = artifact
+                }
+            };
+
+            return Broadcast(new Packet
+            {
+                Event = @event
+            });
+        }
+
         public async Task AddPlayer(Player player)
         {
             lock (State)
@@ -155,6 +183,29 @@ namespace PotentiallyDangerousPrecipitation
 
             if (ToggleUpdated != null) await ToggleUpdated.Invoke(toggle);
         }
+
+        public async Task UpdateArtifact(Toggle artifact)
+        {
+            lock (State)
+            {
+                var indexToReplace = State.Artifacts.FindIndex(x => x.Name == artifact.Name);
+                State.Artifacts[indexToReplace] = artifact;
+            }
+
+            var @event = new Event
+            {
+                artifact_updated_event = new Event.ArtifactUpdatedEvent
+                {
+                    Artifact = artifact
+                }
+            };
+            await Broadcast(new Packet
+            {
+                Event = @event
+            });
+
+            if (ArtifactUpdated != null) await ArtifactUpdated.Invoke(artifact);
+        }
         #endregion
 
         private async Task WsServer_PacketReceived(ConnectedUser user, Packet packet)
@@ -211,6 +262,9 @@ namespace PotentiallyDangerousPrecipitation
                         break;
                     case Event.eventOneofCase.toggle_updated_event:
                         await UpdateToggle(@event.toggle_updated_event.Toggle);
+                        break;
+                    case Event.eventOneofCase.artifact_updated_event:
+                        await UpdateArtifact(@event.artifact_updated_event.Artifact);
                         break;
                 }
             }

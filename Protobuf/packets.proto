@@ -52,11 +52,21 @@ message Event {
     models.Toggle toggle = 1;
   }
 
+  message ArtifactAddedEvent {
+    models.Toggle artifact = 1;
+  }
+
+  message ArtifactUpdatedEvent {
+    models.Toggle artifact = 1;
+  }
+
   oneof event {
     PlayerAddedEvent player_added_event = 1;
     PlayerUpdatedEvent player_updated_event = 2;
     PlayerLeftEvent player_left_event = 3;
     ToggleUpdatedEvent toggle_updated_event = 4;
+    ArtifactAddedEvent artifact_added_event = 5;
+    ArtifactUpdatedEvent artifact_updated_event = 6;
   }
 }
 

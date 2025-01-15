@@ -1,17 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.scss';
 import { FButton } from './components/FButton/FButton';
-import SpanWithEllipses from './components/SpanWithEllipses/spanWithEllipses';
+import SpanWithEllipses from './components/SpanWithEllipses/SpanWithEllipses';
 import SplashScreen from './components/SplashScreen/SplashScreen';
-import { Packet, Connect, ResponseResponseType } from './proto/packets';
 import TabControl from './pages/TabControl/TabControl';
-import { connectWs as connectToRainServer } from './RainClientWrapper';
+import { RainClientWrapper } from './RainClientWrapper';
 import ProgressMoon from './components/ProgressMoon/ProgressMoon';
 import { Action, Player, Toggle } from './proto/models';
 import { createTheme, ThemeProvider } from '@mui/material';
 
-//Ensure MUI items are set up for a dark theme
+// Ensure MUI items are set up for a dark theme
 const theme = createTheme({
     palette: {
         text: {
@@ -22,104 +21,29 @@ const theme = createTheme({
 });
 
 const Main = () => {
-    const [socket, setSocket] = useState<WebSocket | null>(null);
+    const [rainClient, setRainClient] = useState<RainClientWrapper | undefined>();
     const [connectedToGame, setConnectedToGame] = useState(false);
-    const [ipaKnownInstalled, setIpaKnownInstalled] = useState(true); //Assume the game is installed/modded until told otherwise, so we don't prematurely show the install button
+    const [ipaKnownInstalled, setIpaKnownInstalled] = useState(true); // Assume the game is installed/modded until told otherwise, so we don't prematurely show the install button
 
-    //Toggles
+    // Toggles
     const [connectedPlayers, setConnectedPlayers] = useState<Player[]>([]);
     const [toggles, setToggles] = useState<Toggle[]>([]);
     const [actions, setActions] = useState<Action[]>([]);
-
-    const onWsMessage = useCallback(
-        async (event: MessageEvent) => {
-            const packet = Packet.deserializeBinary(await event.data.arrayBuffer());
-            switch (packet.packet) {
-                case 'connect_response': {
-                    const connectResponse = packet.connect_response;
-                    console.log(connectResponse.response.message);
-
-                    if (connectResponse.response.type == ResponseResponseType.Success) {
-                        setConnectedToGame(true);
-                    }
-
-                    setToggles(connectResponse.state.toggles);
-                    setActions(connectResponse.state.actions);
-                    setConnectedPlayers(connectResponse.state.players);
-                    break;
-                }
-                case 'event': {
-                    const _event = packet.event;
-                    switch (_event.event) {
-                        case 'player_added_event': {
-                            const player_added_event = _event.player_added_event;
-                            setConnectedPlayers([...connectedPlayers, player_added_event.player]);
-                            break;
-                        }
-                        case 'player_left_event': {
-                            const player_left_event = _event.player_left_event;
-                            setConnectedPlayers(
-                                connectedPlayers.filter((x) => x.user.id !== player_left_event.player.user.id)
-                            );
-                            break;
-                        }
-                        case 'player_updated_event': {
-                            const player_updated_event = _event.player_updated_event;
-                            const newPlayers = [...connectedPlayers];
-                            const index = newPlayers.findIndex(
-                                (x) => x.user.id === player_updated_event.player.user.id
-                            );
-                            newPlayers[index] = player_updated_event.player;
-                            setConnectedPlayers(newPlayers);
-                            break;
-                        }
-                        case 'toggle_updated_event': {
-                            const toggle_updated_event = _event.toggle_updated_event;
-                            const newToggles = [...toggles];
-                            const index = newToggles.findIndex((x) => x.id === toggle_updated_event.toggle.id);
-                            newToggles[index] = toggle_updated_event.toggle;
-                            setToggles(newToggles);
-                            break;
-                        }
-                    }
-                }
-            }
-        },
-        [socket, connectedToGame, connectedPlayers, toggles]
-    );
-
-    const onWsOpen = useCallback(() => {
-        const packet = new Packet();
-        packet.connect = new Connect();
-        packet.connect.password = 'rain';
-        socket!.send(packet.serializeBinary());
-    }, [socket]);
-
-    const onWsClose = () => {
-        setConnectedToGame(false);
-        connectToRainServer(onWsMessage, onWsOpen, onWsClose, onWsError, setSocket);
-    };
-
-    const onWsError = useCallback(
-        (error: Event) => {
-            console.error('Socket encountered error: ', error, 'Closing socket');
-            socket!.close();
-        },
-        [socket]
-    );
-
-    //When the callbacks update, reassign them to the socket
-    useEffect(() => {
-        if (socket) {
-            socket.onmessage = onWsMessage;
-            socket.onopen = onWsOpen;
-            socket.onclose = onWsClose;
-            socket.onerror = onWsError;
-        }
-    }, [socket, onWsMessage, onWsOpen, onWsClose, onWsError]);
+    const [artifacts, setArtifacts] = useState<Toggle[]>([]);
 
     useEffect(() => {
-        connectToRainServer(onWsMessage, onWsOpen, onWsClose, onWsError, setSocket);
+        const rainClient = new RainClientWrapper();
+
+        rainClient.on('setActions', setActions);
+        rainClient.on('setArtifacts', setArtifacts);
+        rainClient.on('setConnectedPlayers', setConnectedPlayers);
+        rainClient.on('setConnectedToGame', setConnectedToGame);
+        rainClient.on('setToggles', setToggles);
+
+        rainClient.connect();
+
+        setRainClient(rainClient);
+
         (window as any).api.receive('ipa-installed-status', (data: any) => {
             setIpaKnownInstalled(data);
         });
@@ -149,7 +73,7 @@ const Main = () => {
                     )}
                 </>
             )}
-            {connectedToGame && <TabControl socket={socket} toggles={toggles} actions={actions} />}
+            {connectedToGame && <TabControl rainClient={rainClient} toggles={toggles} actions={actions} artifacts={artifacts} />}
             <ProgressMoon />
         </ThemeProvider>
     );

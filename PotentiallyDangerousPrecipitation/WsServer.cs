@@ -19,6 +19,8 @@ namespace PotentiallyDangerousPrecipitation
 {
     public class WsServer
     {
+        private SemaphoreSlim _sendSemaphore = new SemaphoreSlim(1);
+
         public event Func<ConnectedUser, Packet, Task> PacketReceived;
         public event Func<ConnectedUser, Task> ClientConnected;
         public event Func<ConnectedUser, Task> ClientDisconnected;
@@ -234,7 +236,7 @@ namespace PotentiallyDangerousPrecipitation
                 var clientList = new List<ConnectedUser>();
                 lock (clients)
                 {
-                    //We don't necessarily need to await this
+                    // We don't necessarily need to await this
                     foreach (var connectedClient in clients) clientList.Add(connectedClient);
                 }
                 await Task.WhenAll(clientList.Select(x => Send(x, packet)).ToArray());
@@ -254,7 +256,7 @@ namespace PotentiallyDangerousPrecipitation
                 var clientList = new List<ConnectedUser>();
                 lock (clients)
                 {
-                    //We don't necessarily need to await this
+                    // We don't necessarily need to await this
                     foreach (var ConnectedClient in clients.Where(x => ids.Contains(x.id))) clientList.Add(ConnectedClient);
                 }
                 await Task.WhenAll(clientList.Select(x => Send(x, packet)).ToArray());
@@ -269,11 +271,14 @@ namespace PotentiallyDangerousPrecipitation
         {
             try
             {
+                _sendSemaphore.Wait();
                 var bytes = GetFrameFromPacket(packet);
                 await ConnectedClient.networkStream.WriteAsync(bytes.Array, 0, bytes.Count);
+                _sendSemaphore.Release();
             }
             catch (Exception e)
             {
+                _sendSemaphore.Release();
                 Logger.Debug(e.ToString());
                 await ClientDisconnected_Internal(ConnectedClient);
             }
@@ -283,10 +288,13 @@ namespace PotentiallyDangerousPrecipitation
         {
             try
             {
+                _sendSemaphore.Wait();
                 await ConnectedClient.socket.SendAsync(data, SocketFlags.None);
+                _sendSemaphore.Release();
             }
             catch (Exception e)
             {
+                _sendSemaphore.Release();
                 Logger.Debug(e.ToString());
                 await ClientDisconnected_Internal(ConnectedClient);
             }
@@ -333,14 +341,14 @@ namespace PotentiallyDangerousPrecipitation
 
             int i, reponseIdx = 0;
 
-            //Add the frame bytes to the reponse
+            // Add the frame bytes to the reponse
             for (i = 0; i < indexStartRawData; i++)
             {
                 response[reponseIdx] = frame[i];
                 reponseIdx++;
             }
 
-            //Add the data bytes to the response
+            // Add the data bytes to the response
             for (i = 0; i < length; i++)
             {
                 response[reponseIdx] = bytesRaw[i];
@@ -368,7 +376,7 @@ namespace PotentiallyDangerousPrecipitation
         {
             Func<ConnectedUser, Packet, Task> receivedPacket = null;
 
-            //TODO: I don't think Register awaits async callbacks 
+            // TODO: I don't think Register awaits async callbacks 
             var cancellationTokenSource = new CancellationTokenSource();
             var registration = cancellationTokenSource.Token.Register(async () =>
             {

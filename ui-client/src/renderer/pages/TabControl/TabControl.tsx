@@ -3,6 +3,8 @@ import { Box, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import LegacyPanel from '../LegacyPanel/LegacyPanel';
 import { Action, Toggle } from '../../proto/models';
+import ArtifactsPanel from '../ArtifactsPanel/ArtifactsPanel';
+import { RainClientWrapper } from 'renderer/RainClientWrapper';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -23,7 +25,8 @@ function TabPanel(props: TabPanelProps) {
 type Props = {
     toggles: Toggle[];
     actions: Action[];
-    socket: WebSocket | null;
+    artifacts: Toggle[];
+    rainClient: RainClientWrapper | undefined;
 };
 
 const TabControl = (props: Props) => {
@@ -45,10 +48,13 @@ const TabControl = (props: Props) => {
                     sx={{ borderRight: 1, borderColor: 'divider' }}
                 >
                     <Tab label='Legacy Panel' />
-                    <Tab label='Experimental' disabled />
+                    <Tab label='Artifacts' />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <LegacyPanel toggles={props.toggles} actions={props.actions} socket={props.socket} />
+                    <LegacyPanel toggles={props.toggles} actions={props.actions} rainClient={props.rainClient} />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <ArtifactsPanel artifacts={props.artifacts} rainClient={props.rainClient} />
                 </TabPanel>
             </Box>
         </div>

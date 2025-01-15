@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Unity;
 using UnityEngine;
 using UnityEngine.Networking;
+using static RoR2.Chat;
 
 /**
  * Patching method taken appreciatively from Beat Saber Multiplayer on 10/15/2020 by Moon
@@ -39,6 +41,45 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
             Logger.Info("Applied patches!");
         }
     }
+
+    [HarmonyPatch(typeof(Chat))]
+    public class ChatPatch
+    {
+        [HarmonyPatch("SendBroadcastChat")]
+        [HarmonyPatch(new[] { typeof(ChatMessageBase), typeof(int) })]
+        static bool Prefix(ChatMessageBase message, int channelIndex)
+        {
+            NetworkWriter networkWriter = new NetworkWriter();
+            networkWriter.StartMessage(59);
+            networkWriter.Write(message.GetTypeIndex());
+            networkWriter.Write(message);
+            networkWriter.FinishMessage();
+            foreach (NetworkConnection connection in NetworkServer.connections)
+            {
+                connection?.SendWriter(networkWriter, channelIndex);
+            }
+            return false;
+        }
+    }
+
+/*    [HarmonyPatch(typeof(RunArtifactManager))]
+    public class RunArtifactManagerPatch
+    {
+        [HarmonyPatch("SetArtifactEnabled")]
+        static void Prefix(ArtifactDef artifactDef, bool newEnabled)
+        {
+            System.Console.WriteLine(artifactDef.cachedName + " : " + newEnabled);
+            Task.Run(async () =>
+            {
+                await Precipitation.RainServer.UpdateArtifact(new Protos.Models.Toggle()
+                {
+                    Id = artifactDef.nameToken,
+                    Name = artifactDef.cachedName,
+                    Value = newEnabled
+                });
+            });
+        }
+    }*/
 
     [HarmonyPatch(typeof(ItemDef))]
     public class ItemDefPatch
@@ -142,23 +183,27 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
     [HarmonyPatch(typeof(Util))]
     public class UtilPatch
     {
-        [HarmonyPatch("EscapeRichTextForTextMeshPro")]
-        [HarmonyPatch(new[] { typeof(string) })]
-        static bool Prefix(string rtString, ref string __result)
-        {
-            __result = "<noparse>" + rtString + "</noparse>";
-            return false;
-        }
-
         [HarmonyPatch("GetExpAdjustedDropChancePercent")]
         [HarmonyPatch(new[] { typeof(float), typeof(GameObject)})]
-        static bool Prefix(ref float __result)
+        static bool Prefix(float baseChancePercent, GameObject characterBodyObject, ref float __result)
         {
-            var toggle = Precipitation.RainServer.GetToggle("perfect_loot_chance");
-            if (toggle)
+            if (Precipitation.RainServer.GetToggle("perfect_loot_chance"))
             {
                 __result = 100;
                 return false;
+            }
+            else if (Precipitation.RainServer.GetToggle("perfect_loot_chance_for_me"))
+            {
+                /*foreach (var component in characterBodyObject.GetComponents<Component>())
+                {
+                    System.Console.WriteLine($"{component.GetType()} : {component.name}");
+                }*/
+
+                SendBroadcastChat(new UserChatMessage
+                {
+                    sender = NetworkUser.readOnlyInstancesList.First(x => x.GetNetworkPlayerName().GetResolvedName() == "Hart").gameObject,
+                    text = "I'm a bitch"
+                });
             }
             return true;
         }
@@ -169,7 +214,7 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
     {
         static MethodBase TargetMethod()
         {
-            //Patch the thing that steals logs from me
+            // Patch the thing that steals logs from me
             var assembly = AppDomain.CurrentDomain.GetAssemblies().First(x => x.FullName.Contains("RoR2"));
             var redirectorType = assembly.GetType("RoR2.UnitySystemConsoleRedirector");
             return redirectorType.GetMethod("Redirect", ReflectionUtil._allBindingFlags);
@@ -192,6 +237,8 @@ namespace PotentiallyDangerousPrecipitation.HarmonyPatches
             var perfectProcItemChance = Precipitation.RainServer.GetToggle("perfect_proc_item_chance");
             var perfectLegendaryChance = Precipitation.RainServer.GetToggle("perfect_legendary_chance");
             var onlyForgiveMePlease = Precipitation.RainServer.GetToggle("only_forgive_me_please");
+
+            // TODO: Perhaps we should use RoR2Content.Equipment.AffixHaunted.equipmentIndex? Wonder if that's the same as PickupIndex
 
             if (perfectFuelCellChance)
             {

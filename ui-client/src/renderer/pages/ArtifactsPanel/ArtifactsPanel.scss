@@ -1,0 +1,13 @@
+.artifactsPanel {
+    display: inline-flex;
+
+    .buttonColumn {
+        button {
+            margin: 15px;
+        }
+
+        .buttonFieldPair {
+            display: inline-flex;
+        }
+    }
+}
